@@ -107,7 +107,7 @@ export class UserController {
   @Get('suggest/lawyer') 
   async getSuggestedLawyers(@Request() {user}) {
 
-    let lawyers = await this.model.find({userType: UserType.lawyer, ratingAvg: {$gt: 3} }, null, {sort: {ratingAvg: -1}})
+    let lawyers = await this.model.find({userType: UserType.lawyer }, null, {sort: {ratingAvg: -1}}).limit(20)
     return lawyers
   }
 
