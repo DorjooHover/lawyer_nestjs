@@ -111,11 +111,12 @@ export class UserController {
     return lawyers
   }
 
-  @Get('suggest/lawyer/:id') 
+  @Get('suggest/lawyer/:id/:cateId') 
   @ApiParam({name: 'id'})
-  async getSuggestedLawyersByService(@Request() {user}, @Param('id') id: string ) {
+  @ApiParam({name: 'cateId'})
+  async getSuggestedLawyersByService(@Request() {user}, @Param('id') id: string, @Param('cateId') cateId: string ) {
 
-    let lawyers = await this.model.find({userType: UserType.lawyer, 'userServices.serviceId':  {$in: [id] }}, null, {sort: {ratingAvg: -1}})
+    let lawyers = await this.model.find({userType: UserType.lawyer, 'userServices.serviceId':  {$in: [id, cateId] }}, null, {sort: {ratingAvg: -1}})
     return lawyers
   }
 
