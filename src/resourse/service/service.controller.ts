@@ -63,7 +63,7 @@ export class ServiceController {
       let service = await this.model.findByIdAndUpdate(id, {
         title: dto.title,
         parentId: dto.parentId,
-        decription: dto.description,
+        description: dto.description,
         img: dto.img,
         price: dto.price,
         expiredTime: dto.expiredTime

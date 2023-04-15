@@ -1,7 +1,7 @@
 export enum UserType {
   // create order => in lawyer or without lawyer, view services, view lawyers, request lawyer, 
   user = 'user',
-  // create services, verify lawyer , price, change userType, userStatus without system 
+  // create services, verify lawyer ,  change userType, userStatus without system 
   admin = 'admin',
   // get order, view orders themselves, create availableDays for services, update them infos 
   lawyer = 'lawyer',

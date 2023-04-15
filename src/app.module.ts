@@ -6,7 +6,7 @@ import appConfig from './config/app.config';
 import { AuthModule } from './resourse/auth/auth.module';
 import { AwsModule } from './resourse/aws/aws.module';
 import { OrderModule } from './resourse/order/order.module';
-import { PriceModule } from './resourse/price/price.module';
+
 import { ServiceModule } from './resourse/service/service.module';
 import { UserModule } from './resourse/user/user.module';
 @Module({
@@ -24,8 +24,7 @@ import { UserModule } from './resourse/user/user.module';
       dbName: appConfig().dbName
     }),
 
-    UserModule, AuthModule, ServiceModule, OrderModule, PriceModule,
-    AwsModule,
+    UserModule, AuthModule, ServiceModule, OrderModule,     AwsModule,
     AwsSdkModule.forRootAsync({
       defaultServiceOptions: {
         useValue: {

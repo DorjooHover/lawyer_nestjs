@@ -3,14 +3,16 @@ import { InjectModel } from "@nestjs/mongoose";
 import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import mongoose, { Model } from "mongoose";
 import { UserAccessGuard } from "src/guard/auth.guard";
+import { RoleGuard } from "src/guard/role.guard";
 import { Order, OrderDocument } from "src/schema";
 import { ServiceStatus, UserType } from "src/utils/enum";
+import { Roles } from "../auth/roles.decorator";
 import { OrderDto } from "./order.dto";
 import { OrderService } from "./order.service";
 
 @Controller('order')
 @ApiTags('Orders')
-@UseGuards(UserAccessGuard)
+@UseGuards(UserAccessGuard, RoleGuard)
 @ApiBearerAuth('access-token')
 export class OrderController {
   constructor(private readonly service: OrderService, @InjectModel(Order.name) private model: Model<OrderDocument>) {}
@@ -42,50 +44,53 @@ export class OrderController {
     }
   }
 
-  @Get('token/:id/:channelName/:token')
+  @Get('user/token/:id/:channelName/:token')
   @ApiParam({name: 'id'})
   @ApiParam({name: 'channelName'})
   @ApiQuery({name: 'token'})
-  async setOrderToken(@Request() {user}, @Param('id') id: string, @Param('channelName') channelName: string, @Query('token') token: string) {
-    if(!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED)
+  @Roles(UserType.user)
+  async setOrderTokenUser(@Request() {user}, @Param('id') id: string, @Param('channelName') channelName: string, @Query('token') token: string) {
+    
     try {
-      if(user['userType'] == UserType.user) {
-        let order = await this.model.findById(id)
+      let order = await this.model.findById(id)
         order.channelName = channelName;
         order.userToken = token;
         await order.save()
         return true
-      } else {
-        if(user['userType'] == UserType.lawyer) {
-          let order = await this.model.findById(id)
-          order.channelName = channelName;
-          order.lawyerToken = token;
-          await order.save()
-          return true
-        } else {
-          return
-        }
       }
-    } catch (error) {
+    catch (error) {
       throw new HttpException(error, 500)
     }
     
   }
+  @Get('lawyer/token/:id/:channelName/:token')
+  @ApiParam({name: 'id'})
+  @ApiParam({name: 'channelName'})
+  @ApiQuery({name: 'token'})
+  @Roles(UserType.user)
+  async setOrderTokenLawyer(@Request() {user}, @Param('id') id: string, @Param('channelName') channelName: string, @Query('token') token: string) {
 
+    try {
+      let order = await this.model.findById(id)
+      order.channelName = channelName;
+      order.lawyerToken = token;
+      await order.save()
+      return true
+      }
+     catch (error) {
+      throw new HttpException(error, 500)
+    }
+  }
+  
 
+  @Roles(UserType.admin)
   @Get()
   async allOrders(@Request() {user}) {
-    if(!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED)
-    if(user['userType'] == UserType.admin) {
-      let orders = await this.model.find()
-      return orders
-    } 
-    return false
+    return await this.model.find()
   }
 
   @Get('user')
   getUserOrders(@Request() {user}) {
-    if(!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED)
     return this.service.getUserOrders(user['_id'])
   }
 
@@ -95,7 +100,7 @@ export class OrderController {
   @ApiParam({name: 'id'})
   @ApiQuery({name: 'status'})
   updateOrderStatus(@Request() {user}, @Param('id') id: string, @Query('status') status: ServiceStatus) {
-    if(!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED)
+    
     return this.service.updateOrderStatus(id, status)
   }
 

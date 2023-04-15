@@ -27,8 +27,8 @@ export class UserAccessGuard {
  
       const user = await this.userService.validateUser(decoded.name);
 
-
       request.user = user;
+
       return true
     } catch (e) {
       this.logger.error(e);

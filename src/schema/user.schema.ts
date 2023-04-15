@@ -31,6 +31,9 @@ export class AvailableTime {
 export class UserServiceType {
   @Prop({ type: String, enum: ServiceType,  required: true })
   serviceType: ServiceType
+
+  @Prop()
+  price: number
   
   @Prop([AvailableTime])
   time?: AvailableTime[]

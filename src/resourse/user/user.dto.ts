@@ -35,6 +35,9 @@ export class ServiceTypeTime {
     enum: ServiceType,
     }) 
   serviceType: ServiceType
+  @ApiProperty()
+  @IsNumber()
+  price: number
   @ApiProperty({ isArray: true, type: ServiceTime })
   @IsArray()
   time: ServiceTime[];

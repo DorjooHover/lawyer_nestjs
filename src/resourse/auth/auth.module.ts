@@ -4,7 +4,7 @@ import { JwtModule } from "@nestjs/jwt/dist";
 import { MongooseModule } from "@nestjs/mongoose";
 import appConfig from "src/config/app.config";
 
-import { Price, PriceSchema, User, UserSchema } from "src/schema";
+import { User, UserSchema } from "src/schema";
 import { UserService } from "../user/user.service";
 import { AuthController } from "./auth.controller";
 
@@ -13,7 +13,7 @@ import { AuthController } from "./auth.controller";
 @Module({
     imports: [JwtModule.register({
         secretOrPrivateKey: appConfig().appSecret, signOptions: {expiresIn: 60 * 60 * 24}
-    }), MongooseModule.forFeature([{name: User.name, schema: UserSchema}, {name: Price.name, schema: PriceSchema}])],
+    }), MongooseModule.forFeature([{name: User.name, schema: UserSchema}])],
     controllers: [AuthController],
     providers: [UserService],
     

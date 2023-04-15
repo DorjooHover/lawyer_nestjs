@@ -13,21 +13,22 @@ import { InjectModel } from '@nestjs/mongoose';
 import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Model } from 'mongoose';
 import { UserAccessGuard } from 'src/guard/auth.guard';
-import { Price, PriceDocument, Service, ServiceDocument, User, UserDocument } from 'src/schema';
+import { RoleGuard } from 'src/guard/role.guard';
+import { Service, ServiceDocument, User, UserDocument } from 'src/schema';
 import { UserStatus, UserType } from 'src/utils/enum';
+import { Roles } from '../auth/roles.decorator';
 import { RatingService } from './rating.service';
 import { LawyerDto, UserServicesDto } from './user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
 @ApiTags('User')
-@UseGuards(UserAccessGuard)
+@UseGuards(UserAccessGuard, RoleGuard)
 @ApiBearerAuth('access-token')
 export class UserController {
   constructor(
     private readonly service: UserService,
     @InjectModel(User.name) private model: Model<UserDocument>,
-    @InjectModel(Price.name) private priceModel: Model<PriceDocument>,
     @InjectModel(Service.name) private serviceModel: Model<ServiceDocument>,
     private readonly ratingService: RatingService,
 
@@ -36,24 +37,23 @@ export class UserController {
   @Put('/:id')
   @ApiParam({ name: 'id' })
   @ApiQuery({ name: 'status' })
+  @Roles(UserType.admin)
   async updateUserStatus(
     @Request() { user },
     @Param('id') id: string,
     @Query('status') status: UserStatus,
   ) {
-    if (!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED);
-    if (user.userType == UserType.admin) {
+
       let updateUser = await this.service.getUserById(id);
       updateUser.userStatus = status;
       updateUser.save();
       return true;
-    }
-    return false;
+
   }
 
   @Get('me')
   getUser(@Request() {user}) {
-    return this.service.getUserById(user['_id'])
+    return user
   }
 
 
@@ -72,6 +72,7 @@ export class UserController {
   @Get('/:id')
   @ApiQuery({ name: 'comment' })
   @ApiQuery({ name: 'rating' })
+  @Roles(UserType.user)
   async giveRating(
     @Request() { user },
     @Param('id') id: string,
@@ -106,7 +107,7 @@ export class UserController {
   @Get('suggest/lawyer') 
   async getSuggestedLawyers(@Request() {user}) {
 
-    let lawyers = await this.model.find({userType: UserType.lawyer, ratingAvg: {$gt: 3} }, null, {sort: {ratingAvg: -1}}).populate('userServices.serviceTypes.price', 'serviceId servicePrice', this.priceModel);
+    let lawyers = await this.model.find({userType: UserType.lawyer, ratingAvg: {$gt: 3} }, null, {sort: {ratingAvg: -1}})
     return lawyers
   }
 
@@ -114,14 +115,14 @@ export class UserController {
   @ApiParam({name: 'id'})
   async getSuggestedLawyersByService(@Request() {user}, @Param('id') id: string ) {
 
-    let lawyers = await this.model.find({userType: UserType.lawyer, 'userServices.serviceId':  {$in: [id] }}, null, {sort: {ratingAvg: -1}}).populate('userServices.serviceTypes.price', 'serviceId servicePrice', this.priceModel);
+    let lawyers = await this.model.find({userType: UserType.lawyer, 'userServices.serviceId':  {$in: [id] }}, null, {sort: {ratingAvg: -1}})
     return lawyers
   }
 
 
   @Patch()
   async updateLawyer(@Request() {user}, @Body() dto: LawyerDto) {
-    if (!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED);
+
     try {
         let lawyer = await this.model.findByIdAndUpdate(user['_id'], {
             experience: dto.experience,
@@ -132,7 +133,7 @@ export class UserController {
             bio: dto.bio,
             profileImg: dto.profileImg
         })
-        if(!lawyer) return false
+   
         return true
     } catch (error) {
         throw new HttpException(error, 500)
@@ -141,7 +142,7 @@ export class UserController {
 
   @Patch('available')
   async updateLawyerAvailableDays(@Request() {user}, @Body() dto:UserServicesDto ) {
-      if (!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED);
+  
     try {
             
             
