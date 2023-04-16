@@ -13,7 +13,7 @@ export class Service  {
     @Prop({type: mongoose.Types.ObjectId || null, ref: "services"})
     parentId?: Service
     @Prop()
-    expiredTime: String
+    expiredTime: number
     @Prop()
     price: number
     @Prop()

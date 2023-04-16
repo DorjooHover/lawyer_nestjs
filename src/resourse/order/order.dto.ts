@@ -12,17 +12,19 @@ export class OrderDto {
 
   @ApiProperty()
   @IsString()
-  lawyerId: string ;
+  lawyerId: string;
   @ApiProperty()
   @IsString()
   @ValidateIf((object, value) => value !== null)
   serviceId: string | null;
+  @ApiProperty()
+  subServiceId?: string;
 
   @ApiProperty()
   location?: string;
 
   @ApiProperty()
-  expiredTime: string;
+  expiredTime: number;
   @ApiProperty({
     enum: ServiceType,
   })

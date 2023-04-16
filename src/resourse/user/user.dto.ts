@@ -12,51 +12,47 @@ export class RatingDto {
   rating: number;
 }
 
-export class ExperienceUser  {
+export class ExperienceUser {
   @ApiProperty()
-  link: string
+  link: string;
   @ApiProperty()
-  date: number
-  @ApiProperty() 
-  title: string
+  date: number;
+  @ApiProperty()
+  title: string;
 }
 
 export class ServiceTime {
   @ApiProperty()
-  day: string
+  day: string;
   @ApiProperty()
-  date: number
-  @ApiProperty({isArray: true})
-  time: string[]
+  date: number;
+  @ApiProperty({ isArray: true })
+  time: string[];
 }
 
 export class ServiceTypeTime {
   @ApiProperty({
     enum: ServiceType,
-    }) 
-  serviceType: ServiceType
+  })
+  serviceType: ServiceType;
   @ApiProperty()
   @IsNumber()
-  price: number
+  price: number;
+  @ApiProperty()
+  @IsNumber()
+  expiredTime: number;
   @ApiProperty({ isArray: true, type: ServiceTime })
   @IsArray()
   time: ServiceTime[];
-
 }
 
 export class UserServicesDto {
-
-
-  
-  @ApiProperty({type: ServiceTypeTime, isArray: true})
-  serviceTypes: ServiceTypeTime[]
-
+  @ApiProperty({ type: ServiceTypeTime, isArray: true })
+  serviceTypes: ServiceTypeTime[];
 
   @ApiProperty()
   @IsString()
   serviceId: string;
-  
-
 }
 
 export class LawyerDto {
@@ -73,8 +69,8 @@ export class LawyerDto {
   experience: number;
 
   @ApiProperty({ type: UserServicesDto, isArray: true })
-  userServices: UserServicesDto[]
-  
-  @ApiProperty({type: ExperienceUser, isArray: true})
-  experiences: ExperienceUser[]
+  userServices: UserServicesDto[];
+
+  @ApiProperty({ type: ExperienceUser, isArray: true })
+  experiences: ExperienceUser[];
 }

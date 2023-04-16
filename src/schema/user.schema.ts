@@ -1,95 +1,99 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { Document } from "mongoose";
-import { ServiceType, UserStatus, UserType } from "src/utils/enum";
-import { Rating } from "./rating.schema";
-import { Service } from "./service.schema";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { Document } from 'mongoose';
+import { ServiceType, UserStatus, UserType } from 'src/utils/enum';
+import { Rating } from './rating.schema';
+import { Service } from './service.schema';
 
+export type UserDocument = Document & User;
 
-export type UserDocument = Document & User
-
-
-export class ExperienceUser  {
+export class ExperienceUser {
   @Prop()
-  link: string
+  link: string;
   @Prop()
-  date: string
-  @Prop() 
-  title: string
-
+  date: string;
+  @Prop()
+  title: string;
 }
 
 export class AvailableTime {
-
-  @Prop({required: true})
-  day: string
-  @Prop({required: true})
-  time: string[]
-  @Prop({required: true})
-  date: number
+  @Prop({ required: true })
+  day: string;
+  @Prop({ required: true })
+  time: string[];
+  @Prop({ required: true })
+  date: number;
 }
 
 export class UserServiceType {
-  @Prop({ type: String, enum: ServiceType,  required: true })
-  serviceType: ServiceType
+  @Prop({ type: String, enum: ServiceType, required: true })
+  serviceType: ServiceType;
 
   @Prop()
-  price: number
-  
-  @Prop([AvailableTime])
-  time?: AvailableTime[]
+  price: number;
 
+  @Prop()
+  expiredTime: number;
+
+  @Prop([AvailableTime])
+  time?: AvailableTime[];
 }
 export class UserServices {
-  
-
-  @Prop({required: true, type: mongoose.Types.ObjectId, ref: "services"})
-  serviceId: Service
-  @Prop([ UserServiceType])
-  serviceTypes?: UserServiceType[]
+  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: 'services' })
+  serviceId: Service;
+  @Prop([UserServiceType])
+  serviceTypes?: UserServiceType[];
 }
 
-@Schema({timestamps: true})
-export class User  {
-    @Prop({required: true})
-    firstName: string
+@Schema({ timestamps: true })
+export class User {
+  @Prop({ required: true })
+  firstName: string;
 
-    @Prop({required: true})
-    lastName: string
+  @Prop({ required: true })
+  lastName: string;
 
-    @Prop({required: true})
-    phone: string
+  @Prop({ required: true })
+  phone: string;
 
-    @Prop({required: true})
-    password: string
+  @Prop({ required: true })
+  password: string;
 
-    @Prop({ type: String, enum: UserType, default: UserType.user, required: true })
-    userType: UserType;
+  @Prop({
+    type: String,
+    enum: UserType,
+    default: UserType.user,
+    required: true,
+  })
+  userType: UserType;
 
-    @Prop()
-    experience?: number
+  @Prop()
+  experience?: number;
 
-    @Prop()
-    experiences?: ExperienceUser[]
-    
-    @Prop()
-    bio?: String
+  @Prop()
+  experiences?: ExperienceUser[];
 
-    @Prop()
-    ratingAvg?: number
+  @Prop()
+  bio?: String;
 
-    @Prop()
-    rating?: Rating[]
+  @Prop()
+  ratingAvg?: number;
 
-    @Prop()
-    profileImg?: String
+  @Prop()
+  rating?: Rating[];
 
-    @Prop({ type: String, enum: UserStatus, default: UserStatus.pending, required: true })
-    userStatus: UserStatus;
+  @Prop()
+  profileImg?: String;
 
-    @Prop([ UserServices])
-    userServices?: UserServices[] 
+  @Prop({
+    type: String,
+    enum: UserStatus,
+    default: UserStatus.pending,
+    required: true,
+  })
+  userStatus: UserStatus;
 
-
+  @Prop([UserServices])
+  userServices?: UserServices[];
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
+export const UserSchema = SchemaFactory.createForClass(User);
