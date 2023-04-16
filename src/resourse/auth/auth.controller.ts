@@ -45,7 +45,8 @@ export class AuthController {
     let user = await this.service.validateUser(dto.phone);
     if (!user) throw new HttpException('wrong phone', HttpStatus.FORBIDDEN);
 
-    const checkPassword = this.checkPassword(dto.password, user.password);
+    const checkPassword =  this.checkPassword(dto.password, user.password);
+
     if (checkPassword) {
       const token = await this.service.signPayload(user.phone);
       return {  token };
@@ -60,7 +61,7 @@ export class AuthController {
   // }
 
   async checkPassword(password: string, checkPassword: string) {
-    bcrypt.compare(password, checkPassword, (err, result) => {
+    await bcrypt.compare(password, checkPassword, (err, result) => {
       if (result) {
         return true;
       } else {
