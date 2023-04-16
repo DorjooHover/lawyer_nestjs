@@ -63,7 +63,6 @@ export class OrderController {
   @ApiParam({ name: 'id' })
   @ApiParam({ name: 'channelName' })
   @ApiQuery({ name: 'token' })
-  @Roles(UserType.user)
   async setOrderTokenUser(
     @Request() { user },
     @Param('id') id: string,
