@@ -101,7 +101,7 @@ export class OrderController {
     }
   }
 
-  @Get(':id')
+  @Get('user/:id')
   @ApiParam({ name: 'id' })
   getOrderById(@Param('id') id: string) {
     return this.service.getOrderById(id);
