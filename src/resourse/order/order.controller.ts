@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -126,5 +127,10 @@ export class OrderController {
     @Query('status') status: ServiceStatus,
   ) {
     return this.service.updateOrderStatus(id, status);
+  }
+
+  @Delete()
+  async deleteAllOrders() {
+    return await this.model.deleteMany();
   }
 }
