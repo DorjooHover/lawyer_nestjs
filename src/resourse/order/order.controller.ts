@@ -74,7 +74,7 @@ export class OrderController {
       order.channelName = channelName;
       order.userToken = token;
       await order.save();
-      return order;
+      return await this.service.getOrderById(order['_id']);
     } catch (error) {
       throw new HttpException(error, 500);
     }
@@ -95,7 +95,7 @@ export class OrderController {
       order.channelName = channelName;
       order.lawyerToken = token;
       await order.save();
-      return order;
+      return await this.service.getOrderById(order['_id']);
     } catch (error) {
       throw new HttpException(error, 500);
     }
