@@ -74,7 +74,7 @@ export class OrderController {
       order.channelName = channelName;
       order.userToken = token;
       await order.save();
-      return true;
+      return order;
     } catch (error) {
       throw new HttpException(error, 500);
     }
@@ -95,7 +95,7 @@ export class OrderController {
       order.channelName = channelName;
       order.lawyerToken = token;
       await order.save();
-      return true;
+      return order;
     } catch (error) {
       throw new HttpException(error, 500);
     }
