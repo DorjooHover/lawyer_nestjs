@@ -101,6 +101,11 @@ export class OrderController {
     }
   }
 
+  @Get(':id')
+  @ApiParam({ name: 'id' })
+  getOrderById(@Param('id') id: string) {
+    return this.service.getOrderById(id);
+  }
   @Roles(UserType.admin)
   @Get()
   async allOrders(@Request() { user }) {
