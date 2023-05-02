@@ -26,45 +26,4 @@ export class UserService {
     }
   }
 
-  
-
-  // async register(username: string, password: string) {
-  //   try {
-  //     let user = await this.validateUser(username);
-  //     if (user) throw new HttpException('registered user', HttpStatus.FOUND);
-  //     const hashed = await bcrypt.hash(password, 10);
-  //     user = await this.model.create({
-  //       username: username,
-  //       password: hashed,
-  //     });
-
-  //     return user;
-  //   } catch (e) {
-  //     throw new HttpException(e.message, HttpStatus.FORBIDDEN);
-  //   }
-  // }
-  // async login(username: string, password: string) {
-  //   let user = await this.validateUser(username);
-  //   if (!user) throw new HttpException('wrong email', HttpStatus.FORBIDDEN);
-  //   const checkPassword = this.checkPassword(password, user.password);
-  //   if (checkPassword) {
-  //     return user;
-  //   } else {
-  //     throw new HttpException('wrong password', HttpStatus.UNAUTHORIZED);
-  //   }
-  // }
-  // async checkPassword(password: string, checkPassword: string) {
-  //   bcrypt.compare(password, checkPassword, (err, result) => {
-  //     if (result) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   });
-  // }
-
-  // async deleteAllUser() {
-  //   await this.model.deleteMany();
-  //   return true;
-  // }
 }

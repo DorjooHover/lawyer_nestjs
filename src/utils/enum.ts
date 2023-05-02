@@ -39,3 +39,14 @@ export enum ServiceStatus {
   // success order
   finished = 'finished'
 }
+
+export enum TimeStatus {
+  // active lawyers
+  active = 'active',
+  // working
+  progress = 'progress',
+  // denied
+  denied = 'denied',
+  // ended
+  ended = 'ended'
+}

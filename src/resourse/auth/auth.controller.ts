@@ -30,6 +30,7 @@ export class AuthController {
           firstName: dto.firstName,
           phone: dto.phone,
           userStatus: UserStatus.active,
+          alert: 3,
           userType: UserType.user,
           password: hashed,
         });

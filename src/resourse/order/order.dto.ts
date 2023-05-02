@@ -49,3 +49,48 @@ export class OrderDto {
   @IsString()
   lawyerToken: string;
 }
+export class EmergencyOrderDto {
+  @ApiProperty()
+  date: number;
+
+  @ApiProperty()
+  @IsString()
+  clientId: string;
+
+  @ApiProperty()
+  @IsString()
+  lawyerId: string ;
+
+  @ApiProperty()
+  location?: string;
+
+  @ApiProperty()
+  expiredTime: string;
+  @ApiProperty({
+    enum: ServiceType,
+  })
+  serviceType: ServiceType;
+
+  @ApiProperty({
+    enum: ServiceStatus,
+    default: ServiceStatus.pending,
+  })
+  serviceStatus: ServiceStatus;
+
+  @ApiProperty()
+  @IsString()
+  channelName: string;
+
+  @ApiProperty()
+  @IsString()
+  price: string;
+
+  @ApiProperty()
+  @IsString()
+  userToken: string;
+  @ApiProperty()
+  @IsString()
+  lawyerToken: string;
+  @ApiProperty()
+  reason: string;
+}

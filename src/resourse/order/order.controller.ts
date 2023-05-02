@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put, Query, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, Param, Post, Put, Query, Request, UseGuards } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import mongoose, { Model } from "mongoose";
@@ -7,7 +7,7 @@ import { RoleGuard } from "src/guard/role.guard";
 import { Order, OrderDocument } from "src/schema";
 import { ServiceStatus, UserType } from "src/utils/enum";
 import { Roles } from "../auth/roles.decorator";
-import { OrderDto } from "./order.dto";
+import { EmergencyOrderDto, OrderDto } from "./order.dto";
 import { OrderService } from "./order.service";
 
 @Controller('order')
@@ -20,7 +20,6 @@ export class OrderController {
   @Post('')
   async createOrder(@Request() {user},  @Body() dto: OrderDto) {
     try {
-      if(!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED)
       let lawyerId = new mongoose.mongo.ObjectId(dto.lawyerId)
       let clientId = new mongoose.mongo.ObjectId(dto.clientId)
       let serviceId = new mongoose.mongo.ObjectId(dto.serviceId)
@@ -32,6 +31,31 @@ export class OrderController {
         expiredTime: dto.expiredTime,
         serviceStatus: dto.serviceStatus,
         serviceId: serviceId,
+        serviceType: dto.serviceType,
+        userToken: dto.userToken,
+        price: dto.price,
+        lawyerToken: dto.lawyerToken,
+        channelName: dto.channelName
+      }) 
+      return order
+    } catch (error) {
+      throw new HttpException(error.message, 500)
+    }
+  }
+
+  @Post('emergency')
+  async createOrder(@Request() {user},  @Body() dto: EmergencyOrderDto) {
+    try {
+      let lawyerId = new mongoose.mongo.ObjectId(dto.lawyerId)
+      let clientId = new mongoose.mongo.ObjectId(dto.clientId)
+      let order = await this.model.create({
+        clientId:  user['_id'] ,
+        date: dto.date,
+        lawyerId: lawyerId,
+        location: dto.location,
+        expiredTime: dto.expiredTime,
+        serviceStatus: dto.serviceStatus,
+        reason: dto.reason,
         serviceType: dto.serviceType,
         userToken: dto.userToken,
         price: dto.price,
@@ -63,6 +87,9 @@ export class OrderController {
     }
     
   }
+
+
+
   @Get('lawyer/token/:id/:channelName/:token')
   @ApiParam({name: 'id'})
   @ApiParam({name: 'channelName'})

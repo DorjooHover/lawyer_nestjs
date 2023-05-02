@@ -1,12 +1,16 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { Document } from "mongoose";
-import { ServiceType, UserStatus, UserType } from "src/utils/enum";
+import { Document } from "mongoose";
+import { UserStatus, UserType } from "src/utils/enum";
 import { Rating } from "./rating.schema";
-import { Service } from "./service.schema";
 
 
 export type UserDocument = Document & User
 
+
+export class Location {
+  lat: number,
+  lng: number
+}
 
 export class ExperienceUser  {
   @Prop()
@@ -15,37 +19,15 @@ export class ExperienceUser  {
   date: string
   @Prop() 
   title: string
-
 }
 
-export class AvailableTime {
-
-  @Prop({required: true})
-  day: string
-  @Prop({required: true})
-  time: string[]
-  @Prop({required: true})
-  date: number
-}
-
-export class UserServiceType {
-  @Prop({ type: String, enum: ServiceType,  required: true })
-  serviceType: ServiceType
-
+export class Account {
   @Prop()
-  price: number
-  
-  @Prop([AvailableTime])
-  time?: AvailableTime[]
-
-}
-export class UserServices {
-  
-
-  @Prop({required: true, type: mongoose.Types.ObjectId, ref: "services"})
-  serviceId: Service
-  @Prop([ UserServiceType])
-  serviceTypes?: UserServiceType[]
+  accountNumber: number
+  @Prop()
+  username: string
+  @Prop()
+  bank: string
 }
 
 @Schema({timestamps: true})
@@ -70,9 +52,33 @@ export class User  {
 
     @Prop()
     experiences?: ExperienceUser[]
-    
+
     @Prop()
-    bio?: String
+    education?: ExperienceUser[]
+
+    @Prop()
+    degree?: ExperienceUser[]
+
+    @Prop() 
+    licenseNumber?: string
+
+    @Prop() 
+    certificate?: string
+
+    @Prop()
+    taxNumber?: string
+
+    @Prop({type: Account})
+    account?: Account
+
+    @Prop({type: Location}) 
+    workLocation?: Location
+
+    @Prop({type: Location}) 
+    officeLocation?: Location
+
+    @Prop({type: Location}) 
+    location?: Location
 
     @Prop()
     ratingAvg?: number
@@ -86,9 +92,8 @@ export class User  {
     @Prop({ type: String, enum: UserStatus, default: UserStatus.pending, required: true })
     userStatus: UserStatus;
 
-    @Prop([ UserServices])
-    userServices?: UserServices[] 
-
+    @Prop({default: 3})
+    alert: number
 
 }
 

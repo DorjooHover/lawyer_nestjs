@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNumber, IsString } from 'class-validator';
-import { ServiceType } from 'src/utils/enum';
+import { IsNumber, IsString } from 'class-validator';
 export class RatingDto {
   @ApiProperty()
   clientId: string;
@@ -11,6 +10,17 @@ export class RatingDto {
   @ApiProperty()
   rating: number;
 }
+export class AccountDto {
+  @ApiProperty()
+  @IsNumber()
+  accountNumber: number
+  @ApiProperty()
+  @IsString()
+  username: string
+  @ApiProperty()
+  @IsString()
+  bank: string
+}
 
 export class ExperienceUser  {
   @ApiProperty()
@@ -20,49 +30,16 @@ export class ExperienceUser  {
   @ApiProperty() 
   title: string
 }
-
-export class ServiceTime {
-  @ApiProperty()
-  day: string
-  @ApiProperty()
-  date: number
-  @ApiProperty({isArray: true})
-  time: string[]
-}
-
-export class ServiceTypeTime {
-  @ApiProperty({
-    enum: ServiceType,
-    }) 
-  serviceType: ServiceType
+export class LocationDto {
   @ApiProperty()
   @IsNumber()
-  price: number
-  @ApiProperty({ isArray: true, type: ServiceTime })
-  @IsArray()
-  time: ServiceTime[];
-
-}
-
-export class UserServicesDto {
-
-
-  
-  @ApiProperty({type: ServiceTypeTime, isArray: true})
-  serviceTypes: ServiceTypeTime[]
-
-
+  lat: number
   @ApiProperty()
-  @IsString()
-  serviceId: string;
-  
-
+  @IsNumber()
+  lng: number
 }
 
 export class LawyerDto {
-  @ApiProperty()
-  @IsString()
-  bio: string;
 
   @ApiProperty()
   @IsString()
@@ -71,10 +48,37 @@ export class LawyerDto {
   @ApiProperty()
   @IsNumber()
   experience: number;
+  
+  @ApiProperty()
+  @IsString()
+  licenseNumber: string
+  
+  @ApiProperty()
+  @IsString()
+  certificate: string
+  
+  @ApiProperty()
+  @IsString()
+  taxNumber: string
 
-  @ApiProperty({ type: UserServicesDto, isArray: true })
-  userServices: UserServicesDto[]
+  @ApiProperty({type: AccountDto})
+  account: Account
+
+  @ApiProperty({type: LocationDto}) 
+  workLocation: LocationDto
+
+  @ApiProperty({type: LocationDto}) 
+  officeLocation: LocationDto
+
+  @ApiProperty({type: LocationDto}) 
+  location: LocationDto
   
   @ApiProperty({type: ExperienceUser, isArray: true})
   experiences: ExperienceUser[]
+  
+  @ApiProperty({ type: ExperienceUser, isArray: true })
+  education?: ExperienceUser[]
+
+  @ApiProperty({ type: ExperienceUser, isArray: true })
+  degree?: ExperienceUser[]
 }

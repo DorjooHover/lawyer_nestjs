@@ -20,7 +20,7 @@ export class Order  {
     lawyerId: User
 
     @Prop({type: mongoose.Types.ObjectId, ref: "users"})
-    serviceId: Service
+    serviceId: Service | null
 
     @Prop()
     location?: string
@@ -44,6 +44,9 @@ export class Order  {
     userToken: string
     @Prop({required: true})
     lawyerToken: string
+
+    @Prop()
+    reason: string
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order)
