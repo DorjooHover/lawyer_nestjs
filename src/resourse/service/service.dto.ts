@@ -11,7 +11,7 @@ export class ServiceDto {
 
   price: number
   @ApiProperty()
-  expiredTime: string
+  expiredTime: number
   @ApiProperty()
 
   parentId: string

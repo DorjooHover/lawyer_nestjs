@@ -1,38 +1,41 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { Document } from "mongoose";
-import { ServiceStatus, ServiceType } from "src/utils/enum";
-import { Service } from "./service.schema";
-import { User } from "./user.schema";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { Document } from 'mongoose';
+import { ServiceStatus, ServiceType } from 'src/utils/enum';
+import { Service } from './service.schema';
+import { User } from './user.schema';
 
+export type OrderDocument = Document & Order;
 
-export type OrderDocument = Document & Order
+@Schema({ timestamps: true })
+export class Order {
+  @Prop({ required: true })
+  date: number;
 
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'users' })
+  clientId: User | null;
 
-@Schema({timestamps: true})
-export class Order  {
-    @Prop({required: true})
-    date: number
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'users' })
+  lawyerId: User;
 
-    @Prop({type: mongoose.Types.ObjectId, ref: "users"})
-    clientId: User | null
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'users' })
+  serviceId: Service | null;
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'users' })
+  subServiceId: Service;
 
-    @Prop({type: mongoose.Types.ObjectId, ref: "users"})
-    lawyerId: User
+  @Prop()
+  location?: string;
 
-    @Prop({type: mongoose.Types.ObjectId, ref: "users"})
-    serviceId: Service | null
+  @Prop()
+  expiredTime: number;
 
-    @Prop()
-    location?: string
+  @Prop({ type: String, enum: ServiceType, required: true })
+  serviceType: ServiceType;
 
-    @Prop()
-    expiredTime: string
+  @Prop({ type: String, enum: ServiceStatus, required: true })
+  serviceStatus: ServiceStatus;
 
-    @Prop({ type: String, enum: ServiceType,   required: true })
-    serviceType: ServiceType
-
-    @Prop({ type: String, enum: ServiceStatus ,  required: true })
-    serviceStatus: ServiceStatus
+  @Prop({ required: true })
+  channelName: string;
 
     @Prop({required: true})
     channelName: string
@@ -49,4 +52,4 @@ export class Order  {
     reason: string
 }
 
-export const OrderSchema = SchemaFactory.createForClass(Order)
+export const OrderSchema = SchemaFactory.createForClass(Order);

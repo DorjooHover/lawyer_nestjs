@@ -3,6 +3,7 @@ import { Document } from "mongoose";
 import { UserStatus, UserType } from "src/utils/enum";
 import { Rating } from "./rating.schema";
 
+export type UserDocument = Document & User;
 
 export type UserDocument = Document & User
 
@@ -14,7 +15,7 @@ export class Location {
 
 export class ExperienceUser  {
   @Prop()
-  link: string
+  link: string;
   @Prop()
   date: string
   @Prop() 
@@ -30,25 +31,30 @@ export class Account {
   bank: string
 }
 
-@Schema({timestamps: true})
-export class User  {
-    @Prop({required: true})
-    firstName: string
+@Schema({ timestamps: true })
+export class User {
+  @Prop({ required: true })
+  firstName: string;
 
-    @Prop({required: true})
-    lastName: string
+  @Prop({ required: true })
+  lastName: string;
 
-    @Prop({required: true})
-    phone: string
+  @Prop({ required: true })
+  phone: string;
 
-    @Prop({required: true})
-    password: string
+  @Prop({ required: true })
+  password: string;
 
-    @Prop({ type: String, enum: UserType, default: UserType.user, required: true })
-    userType: UserType;
+  @Prop({
+    type: String,
+    enum: UserType,
+    default: UserType.user,
+    required: true,
+  })
+  userType: UserType;
 
-    @Prop()
-    experience?: number
+  @Prop()
+  experience?: number;
 
     @Prop()
     experiences?: ExperienceUser[]
@@ -80,14 +86,14 @@ export class User  {
     @Prop({type: Location}) 
     location?: Location
 
-    @Prop()
-    ratingAvg?: number
+  @Prop()
+  bio?: String;
 
-    @Prop()
-    rating?: Rating[]
+  @Prop()
+  ratingAvg?: number;
 
-    @Prop()
-    profileImg?: String
+  @Prop()
+  rating?: Rating[];
 
     @Prop({ type: String, enum: UserStatus, default: UserStatus.pending, required: true })
     userStatus: UserStatus;
@@ -95,6 +101,8 @@ export class User  {
     @Prop({default: 3})
     alert: number
 
+  @Prop([UserServices])
+  userServices?: UserServices[];
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
+export const UserSchema = SchemaFactory.createForClass(User);

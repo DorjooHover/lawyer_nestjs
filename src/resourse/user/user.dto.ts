@@ -22,14 +22,15 @@ export class AccountDto {
   bank: string
 }
 
-export class ExperienceUser  {
+export class ExperienceUser {
   @ApiProperty()
-  link: string
+  link: string;
   @ApiProperty()
-  date: number
-  @ApiProperty() 
-  title: string
+  date: number;
+  @ApiProperty()
+  title: string;
 }
+<<<<<<< HEAD
 export class LocationDto {
   @ApiProperty()
   @IsNumber()
@@ -37,6 +38,41 @@ export class LocationDto {
   @ApiProperty()
   @IsNumber()
   lng: number
+=======
+
+export class ServiceTime {
+  @ApiProperty()
+  day: string;
+  @ApiProperty()
+  date: number;
+  @ApiProperty({ isArray: true })
+  time: string[];
+}
+
+export class ServiceTypeTime {
+  @ApiProperty({
+    enum: ServiceType,
+  })
+  serviceType: ServiceType;
+  @ApiProperty()
+  @IsNumber()
+  price: number;
+  @ApiProperty()
+  @IsNumber()
+  expiredTime: number;
+  @ApiProperty({ isArray: true, type: ServiceTime })
+  @IsArray()
+  time: ServiceTime[];
+}
+
+export class UserServicesDto {
+  @ApiProperty({ type: ServiceTypeTime, isArray: true })
+  serviceTypes: ServiceTypeTime[];
+
+  @ApiProperty()
+  @IsString()
+  serviceId: string;
+>>>>>>> 6c7cc77e3b7bc54cc6dcc547ac94a30ce81fb2e5
 }
 
 export class LawyerDto {
@@ -61,6 +97,7 @@ export class LawyerDto {
   @IsString()
   taxNumber: string
 
+<<<<<<< HEAD
   @ApiProperty({type: AccountDto})
   account: Account
 
@@ -81,4 +118,11 @@ export class LawyerDto {
 
   @ApiProperty({ type: ExperienceUser, isArray: true })
   degree?: ExperienceUser[]
+=======
+  @ApiProperty({ type: UserServicesDto, isArray: true })
+  userServices: UserServicesDto[];
+
+  @ApiProperty({ type: ExperienceUser, isArray: true })
+  experiences: ExperienceUser[];
+>>>>>>> 6c7cc77e3b7bc54cc6dcc547ac94a30ce81fb2e5
 }
