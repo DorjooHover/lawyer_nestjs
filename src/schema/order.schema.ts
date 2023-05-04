@@ -12,10 +12,10 @@ export class Order {
   date: number;
 
   @Prop({ type: mongoose.Types.ObjectId, ref: 'users' })
-  clientId: User | null;
+  client: User | null;
 
   @Prop({ type: mongoose.Types.ObjectId, ref: 'users' })
-  lawyerId: User;
+  lawyer: User;
 
   @Prop({ type: mongoose.Types.ObjectId, ref: 'users' })
   serviceId: Service | null;
@@ -36,9 +36,6 @@ export class Order {
 
   @Prop({ required: true })
   channelName: string;
-
-    @Prop({required: true})
-    channelName: string
 
     @Prop({required: true})
     price: string

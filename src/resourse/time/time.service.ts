@@ -42,12 +42,13 @@ export class TimeService {
     }
   }
   
-  async getActive(time: number) {
+async getActive(time: number) {
     try {
-      return = await this.model.find({
+      return await this.model.find({
         'timeDetail.status': TimeStatus.active,
         'timeDetail.time': {$gte: time + 1000 * 60 *30},
-      }).sort({lawyer.ratingAvg: -1}).limit(1).select('lawyer')
+      })
+      // .sort({lawyer.ratingAvg: -1}).limit(1).select('lawyer')
     } catch(error) {
       throw new HttpException(error.message, 500)
     }

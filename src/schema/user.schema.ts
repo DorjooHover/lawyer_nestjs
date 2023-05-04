@@ -2,14 +2,12 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
 import { UserStatus, UserType } from "src/utils/enum";
 import { Rating } from "./rating.schema";
+import { Service } from "./service.schema";
 
 export type UserDocument = Document & User;
 
-export type UserDocument = Document & User
-
-
 export class Location {
-  lat: number,
+  lat: number
   lng: number
 }
 
@@ -95,14 +93,14 @@ export class User {
   @Prop()
   rating?: Rating[];
 
-    @Prop({ type: String, enum: UserStatus, default: UserStatus.pending, required: true })
-    userStatus: UserStatus;
+  @Prop({ type: String, enum: UserStatus, default: UserStatus.pending, required: true })
+  userStatus: UserStatus;
 
-    @Prop({default: 3})
-    alert: number
+  @Prop({default: 3})
+  alert: number
 
-  @Prop([UserServices])
-  userServices?: UserServices[];
+  @Prop()
+  userServices?: Service[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

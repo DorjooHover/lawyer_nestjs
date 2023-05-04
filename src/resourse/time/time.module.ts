@@ -7,6 +7,7 @@ import { TimeService } from "./time.service";
 @Module({
   imports: [MongooseModule.forFeature([{name: Time.name, schema: TimeSchema}])],
   controllers: [TimeController],
-  providers: [TimeService]
+  providers: [TimeService],
+  exports: [TimeService]
 })
 export class TimeModule {}

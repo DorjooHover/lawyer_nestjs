@@ -19,7 +19,7 @@ export class TimeDto {
     price: number
     
     @ApiProperty()
-    service: Service
+    service: string
     @ApiProperty({enum: ServiceType}) 
     serviceType: ServiceType
     @ApiProperty({type: TimeDetailDto, isArray: true})

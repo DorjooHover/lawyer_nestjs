@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -19,6 +20,7 @@ import { RoleGuard } from 'src/guard/role.guard';
 import { Service, ServiceDocument, User, UserDocument } from 'src/schema';
 import { UserStatus, UserType } from 'src/utils/enum';
 import { Roles } from '../auth/roles.decorator';
+import { TimeService } from '../time/time.service';
 import { RatingService } from './rating.service';
 import { LawyerDto } from './user.dto';
 import { UserService } from './user.service';
@@ -30,6 +32,7 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(
     private readonly service: UserService,
+    private readonly time: TimeService,
     @InjectModel(User.name) private model: Model<UserDocument>,
     @InjectModel(Service.name) private serviceModel: Model<ServiceDocument>,
     private readonly ratingService: RatingService,
@@ -136,6 +139,14 @@ export class UserController {
   @Roles(UserType.user)
   async updateLawyer(@Request() { user }, @Body() dto: LawyerDto) {
     try {
+      let times = []
+      if(dto.userServices.length > 0) {
+        times = dto.userServices.map(async (s) => {
+          let time = await this.time.createTime(s, user['_id'])
+          return time['service']
+        })
+      
+      }
       let lawyer = await this.model.findByIdAndUpdate(user['_id'], {
         experience: dto.experience,
         education: dto.education,
@@ -151,6 +162,7 @@ export class UserController {
         userStatus: UserStatus.pending,
         userType: UserType.lawyer,
         profileImg: dto.profileImg,
+        userServices: times
       });
 
       return true;
@@ -171,5 +183,9 @@ export class UserController {
     } catch (error) {
       throw new HttpException(error.message, 500);
     }
+  }
+  @Delete()
+  async deleteUsers() {
+    return await this.model.deleteMany()
   }
 }

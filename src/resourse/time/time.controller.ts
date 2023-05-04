@@ -14,7 +14,7 @@ export class TimeController {
 
   @Post()
   @Roles(UserType.lawyer)
-  createTime(@Request() {user} @Body()  dto: TimeDto) {
+  createTime(@Request() {user} , @Body()  dto: TimeDto) {
     return this.service.createTime(dto, user['_id'])
   }
 
@@ -27,7 +27,7 @@ export class TimeController {
   @Get('active/:time')
   @ApiParam({name: 'time'})
   getActive(@Param('time') time: number) {
-    return this.service.getActiveLawyer()
+    return this.service.getActive(time)
   }
   
 }

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString } from 'class-validator';
+import { TimeDto } from '../time/time.dto';
 export class RatingDto {
   @ApiProperty()
   clientId: string;
@@ -30,7 +31,6 @@ export class ExperienceUser {
   @ApiProperty()
   title: string;
 }
-<<<<<<< HEAD
 export class LocationDto {
   @ApiProperty()
   @IsNumber()
@@ -38,41 +38,6 @@ export class LocationDto {
   @ApiProperty()
   @IsNumber()
   lng: number
-=======
-
-export class ServiceTime {
-  @ApiProperty()
-  day: string;
-  @ApiProperty()
-  date: number;
-  @ApiProperty({ isArray: true })
-  time: string[];
-}
-
-export class ServiceTypeTime {
-  @ApiProperty({
-    enum: ServiceType,
-  })
-  serviceType: ServiceType;
-  @ApiProperty()
-  @IsNumber()
-  price: number;
-  @ApiProperty()
-  @IsNumber()
-  expiredTime: number;
-  @ApiProperty({ isArray: true, type: ServiceTime })
-  @IsArray()
-  time: ServiceTime[];
-}
-
-export class UserServicesDto {
-  @ApiProperty({ type: ServiceTypeTime, isArray: true })
-  serviceTypes: ServiceTypeTime[];
-
-  @ApiProperty()
-  @IsString()
-  serviceId: string;
->>>>>>> 6c7cc77e3b7bc54cc6dcc547ac94a30ce81fb2e5
 }
 
 export class LawyerDto {
@@ -97,9 +62,8 @@ export class LawyerDto {
   @IsString()
   taxNumber: string
 
-<<<<<<< HEAD
   @ApiProperty({type: AccountDto})
-  account: Account
+  account: AccountDto
 
   @ApiProperty({type: LocationDto}) 
   workLocation: LocationDto
@@ -118,11 +82,7 @@ export class LawyerDto {
 
   @ApiProperty({ type: ExperienceUser, isArray: true })
   degree?: ExperienceUser[]
-=======
-  @ApiProperty({ type: UserServicesDto, isArray: true })
-  userServices: UserServicesDto[];
 
-  @ApiProperty({ type: ExperienceUser, isArray: true })
-  experiences: ExperienceUser[];
->>>>>>> 6c7cc77e3b7bc54cc6dcc547ac94a30ce81fb2e5
+  @ApiProperty({type: TimeDto, isArray: true})
+  userServices: TimeDto[]
 }

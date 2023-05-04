@@ -4,13 +4,12 @@ import {
   Delete,
   Get,
   HttpException,
-  HttpStatus,
   Param,
   Post,
   Put,
   Query,
   Request,
-  UseGuards,
+  UseGuards
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -18,9 +17,9 @@ import mongoose, { Model } from 'mongoose';
 import { UserAccessGuard } from 'src/guard/auth.guard';
 import { RoleGuard } from 'src/guard/role.guard';
 import { Order, OrderDocument } from 'src/schema';
-import { ServiceStatus, UserType } from 'src/utils/enum';
+import { ServiceStatus, ServiceType, UserType } from 'src/utils/enum';
 import { Roles } from '../auth/roles.decorator';
-import { OrderDto } from './order.dto';
+import { EmergencyOrderDto, OrderDto } from './order.dto';
 import { OrderService } from './order.service';
 
 @Controller('order')
@@ -40,9 +39,9 @@ export class OrderController {
       let clientId = new mongoose.mongo.ObjectId(dto.clientId)
       let serviceId = new mongoose.mongo.ObjectId(dto.serviceId)
       let order = await this.model.create({
-        clientId: user['_id'],
+        client: user['_id'],
         date: dto.date,
-        lawyerId: lawyerId,
+        lawyer: lawyerId,
         location: dto.location,
         serviceStatus: dto.serviceStatus,
         serviceId: serviceId,
@@ -55,14 +54,14 @@ export class OrderController {
   }
 
   @Post('emergency')
-  async createOrder(@Request() {user},  @Body() dto: EmergencyOrderDto) {
+  async createEmergencyOrder(@Request() {user},  @Body() dto: EmergencyOrderDto) {
     try {
-      let lawyerId = new mongoose.mongo.ObjectId(dto.lawyerId)
+      let lawyerId = dto.serviceType == ServiceType.onlineEmergency ? null : new mongoose.mongo.ObjectId(dto.lawyerId)
       let clientId = new mongoose.mongo.ObjectId(dto.clientId)
       let order = await this.model.create({
-        clientId:  user['_id'] ,
+        client:  user['_id'] ,
         date: dto.date,
-        lawyerId: lawyerId,
+        lawyer: lawyerId,
         location: dto.location,
         expiredTime: dto.expiredTime,
         serviceStatus: dto.serviceStatus,
