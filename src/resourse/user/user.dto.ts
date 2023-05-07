@@ -89,7 +89,7 @@ export class LawyerDto {
 
   @ApiProperty({type: TimeDto, isArray: true})
   userServices: TimeDto[]
-  @ApiProperty({type: string, isArray: true})
+  @ApiProperty({isArray: true})
   phoneNumbers: string[]
   @ApiProperty()
   
