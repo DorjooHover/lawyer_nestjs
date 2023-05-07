@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsString } from 'class-validator';
-import { TimeDto } from '../time/time.dto';
 export class RatingDto {
   @ApiProperty()
   clientId: string;
@@ -87,8 +86,8 @@ export class LawyerDto {
   @ApiProperty({ type: ExperienceUser, isArray: true })
   degree?: ExperienceUser[]
 
-  @ApiProperty({type: TimeDto, isArray: true})
-  userServices: TimeDto[]
+  @ApiProperty({ isArray: true})
+  userServices: string[]
   @ApiProperty({isArray: true})
   phoneNumbers: string[]
   @ApiProperty()
