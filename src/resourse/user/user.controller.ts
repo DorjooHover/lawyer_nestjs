@@ -161,6 +161,7 @@ export class UserController {
         experiences: dto.experiences,
         userStatus: UserStatus.pending,
         userType: UserType.lawyer,
+        registerNumber: dto.registerNumber,
         profileImg: dto.profileImg,
         userServices: times
       });

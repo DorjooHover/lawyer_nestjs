@@ -47,6 +47,10 @@ export class LawyerDto {
   profileImg: string;
 
   @ApiProperty()
+  @IsString()
+  registerNumber: string;
+
+  @ApiProperty()
   @IsNumber()
   experience: number;
   

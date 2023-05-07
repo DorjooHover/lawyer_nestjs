@@ -37,11 +37,15 @@ export class User {
   @Prop({ required: true })
   lastName: string;
 
+  
   @Prop({ required: true })
   phone: string;
-
+  
   @Prop({ required: true })
   password: string;
+  
+  @Prop()
+  registerNumber: string;
 
   @Prop({
     type: String,
