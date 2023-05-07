@@ -108,6 +108,11 @@ export class User {
 
   @Prop()
   profileImg?: string;
+
+  @Prop()
+  phoneNumbers?: string[];
+  @Prop()
+  email?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

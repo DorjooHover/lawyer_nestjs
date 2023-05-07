@@ -163,7 +163,9 @@ export class UserController {
         userType: UserType.lawyer,
         registerNumber: dto.registerNumber,
         profileImg: dto.profileImg,
-        userServices: times
+        userServices: times,
+        email: dto.email,
+        phoneNumbers: dto.phoneNumbers
       });
 
       return true;
