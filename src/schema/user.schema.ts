@@ -101,6 +101,9 @@ export class User {
 
   @Prop()
   userServices?: Service[];
+
+  @Prop()
+  profileImg?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
