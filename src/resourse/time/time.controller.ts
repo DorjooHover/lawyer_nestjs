@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Request, UseGuards } from '@nestjs/common';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { UserAccessGuard } from 'src/guard/auth.guard';
 import { RoleGuard } from 'src/guard/role.guard';
 import { UserType } from 'src/utils/enum';
@@ -8,6 +8,7 @@ import { TimeDto } from './time.dto';
 import { TimeService } from './time.service';
 @Controller('time')
 @UseGuards(UserAccessGuard, RoleGuard)
+@ApiBearerAuth('access-token')
 @ApiTags('Time')
 export class TimeController {
   constructor(private readonly service: TimeService) {}
