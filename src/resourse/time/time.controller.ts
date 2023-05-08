@@ -25,6 +25,13 @@ export class TimeController {
     return this.service.getTimeLawyer(id)
   }
 
+  @Get('service/:id/:type')
+  @ApiParam({name: 'id'})
+  @ApiParam({name: 'type'})
+  getTimeService(@Param('id') id: string, @Param('type') type: string) {
+    return this.service.getTimeService(id, type)
+  }
+
   @Get('active/:time')
   @ApiParam({name: 'time'})
   getActive(@Param('time') time: number) {

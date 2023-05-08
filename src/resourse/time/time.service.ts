@@ -41,6 +41,13 @@ export class TimeService {
       throw new HttpException(error.message, 500)
     }
   }
+  async getTimeService(id: string, type: string) {
+    try {
+      return await this.model.findOne({service: id, serviceType: type, 'timeDetail.status': TimeStatus.active, 'timeDetail.time': {$gte: Date.now() + 1000 * 60 * 30}})
+    } catch (error) {
+      throw new HttpException(error.message, 500)
+    }
+  }
   
 async getActive(time: number) {
     try {
