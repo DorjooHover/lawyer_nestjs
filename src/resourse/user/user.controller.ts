@@ -139,14 +139,8 @@ export class UserController {
   @Roles(UserType.user)
   async updateLawyer(@Request() { user }, @Body() dto: LawyerDto) {
     try {
-      let times = []
-      if(dto.userServices.length > 0) {
-        times = dto.userServices.map(async (s) => {
-          let time = await this.time.createTime(s, user['_id'])
-          return time['service']
-        })
       
-      }
+      
       let lawyer = await this.model.findByIdAndUpdate(user['_id'], {
         experience: dto.experience,
         education: dto.education,
@@ -163,7 +157,7 @@ export class UserController {
         userType: UserType.lawyer,
         registerNumber: dto.registerNumber,
         profileImg: dto.profileImg,
-        userServices: times,
+        userServices: dto.userServices,
         email: dto.email,
         phoneNumbers: dto.phoneNumbers
       });

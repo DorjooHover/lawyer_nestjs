@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { ServiceStatus, ServiceType } from 'src/utils/enum';
 import { Service } from './service.schema';
-import { User } from './user.schema';
+import { Location, User } from './user.schema';
 
 export type OrderDocument = Document & Order;
 

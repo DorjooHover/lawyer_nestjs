@@ -7,4 +7,4 @@ RUN npm install
 ADD . /app
 
 EXPOSE 5050
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start"]
