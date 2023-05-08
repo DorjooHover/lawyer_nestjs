@@ -23,7 +23,7 @@ export class Order {
   subServiceId: Service;
 
   @Prop()
-  location?: string;
+  location?: Location;
 
   @Prop()
   expiredTime: number;

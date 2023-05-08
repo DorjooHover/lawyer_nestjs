@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, ValidateIf } from 'class-validator';
 import { ServiceStatus, ServiceType } from 'src/utils/enum';
+import { LocationDto } from '../user/user.dto';
 
 export class OrderDto {
   @ApiProperty()
@@ -20,8 +21,8 @@ export class OrderDto {
   @ApiProperty()
   subServiceId?: string;
 
-  @ApiProperty()
-  location?: string;
+  @ApiProperty({type: LocationDto})
+  location?: LocationDto;
 
   @ApiProperty()
   expiredTime: number;
