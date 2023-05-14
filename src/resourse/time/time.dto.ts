@@ -9,6 +9,15 @@ export class TimeDetailDto {
   @IsNumber()
   time: number
 }
+
+export class TimeTypeDto {
+  @ApiProperty({enum: ServiceType}) 
+  type: ServiceType
+  @ApiProperty()
+  price: number
+  @ApiProperty()
+  expiredTime: number
+}
 export class TimeDto {
   
     @ApiProperty()
@@ -20,8 +29,8 @@ export class TimeDto {
     
     @ApiProperty()
     service: string
-    @ApiProperty({enum: ServiceType, isArray: true}) 
-    serviceType: ServiceType[]
+    @ApiProperty({type: TimeTypeDto, isArray: true}) 
+    serviceType: TimeTypeDto[]
     @ApiProperty({type: TimeDetailDto, isArray: true})
     timeDetail: TimeDetailDto[]
 

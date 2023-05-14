@@ -14,6 +14,15 @@ export class TimeDetail {
   time: number
 }
 
+export class TimeType {
+  @Prop({type: String, enum: ServiceType})
+  type: ServiceType
+  @Prop()
+  price: number
+  @Prop()
+  expiredTime: number
+}
+
 @Schema({timestamps: true})
 export class Time  {
 
@@ -21,14 +30,11 @@ export class Time  {
     @Prop({type: mongoose.Types.ObjectId , ref: "users"})
     lawyer: User
     @Prop()
-    expiredTime: number
-    @Prop()
-    price: number
-    
+  
     @Prop({type: mongoose.Types.ObjectId, ref: 'services'})
     service: Service
-    @Prop({type: mongoose.Types.Array, enum: ServiceType, })
-    serviceType: ServiceType[]
+    @Prop([TimeType])
+    serviceType: TimeType[]
     @Prop([TimeDetail])
     timeDetail: TimeDetail[]
 
