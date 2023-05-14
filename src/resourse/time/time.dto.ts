@@ -20,8 +20,8 @@ export class TimeDto {
     
     @ApiProperty()
     service: string
-    @ApiProperty({enum: ServiceType}) 
-    serviceType: ServiceType
+    @ApiProperty({enum: ServiceType, isArray: true}) 
+    serviceType: ServiceType[]
     @ApiProperty({type: TimeDetailDto, isArray: true})
     timeDetail: TimeDetailDto[]
 

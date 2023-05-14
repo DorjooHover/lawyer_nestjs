@@ -27,8 +27,8 @@ export class Time  {
     
     @Prop({type: mongoose.Types.ObjectId, ref: 'services'})
     service: Service
-    @Prop({type: String, enum: ServiceType})
-    serviceType: ServiceType
+    @Prop({type: mongoose.Types.Array, enum: ServiceType, })
+    serviceType: ServiceType[]
     @Prop([TimeDetail])
     timeDetail: TimeDetail[]
 

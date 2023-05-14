@@ -4,6 +4,7 @@ import { UserAccessGuard } from 'src/guard/auth.guard';
 import { RoleGuard } from 'src/guard/role.guard';
 import { UserType } from 'src/utils/enum';
 import { Roles } from '../auth/roles.decorator';
+import { TimeDto } from "./time.dto";
 import { TimeService } from './time.service';
 @Controller('time')
 @UseGuards(UserAccessGuard, RoleGuard)
