@@ -4,7 +4,6 @@ import { UserAccessGuard } from 'src/guard/auth.guard';
 import { RoleGuard } from 'src/guard/role.guard';
 import { UserType } from 'src/utils/enum';
 import { Roles } from '../auth/roles.decorator';
-import { TimesDto } from './time.dto';
 import { TimeService } from './time.service';
 @Controller('time')
 @UseGuards(UserAccessGuard, RoleGuard)
@@ -15,9 +14,9 @@ export class TimeController {
 
   @Post()
   @Roles(UserType.lawyer)
-  createTime(@Request() {user} , @Body()  dto: TimesDto) {
-   return dto.times.map(time => this.service.createTime(time, user['_id']))
-    
+  createTime(@Request() {user} , @Body()  dto: TimeDto) {
+  //  return dto.times.map(time => this.service.createTime(time, user['_id']))
+    return this.service.createTime(dto, user['_id'])
   }
 
   @Get('lawyer/:id')
