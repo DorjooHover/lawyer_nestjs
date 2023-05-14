@@ -27,3 +27,8 @@ export class TimeDto {
 
 
 }
+
+export class TimesDto {
+  @ApiProperty({isArray: true, type: TimeDto})
+  times: TimeDto[]
+}
