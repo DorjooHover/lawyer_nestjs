@@ -29,7 +29,7 @@ export class Time  {
 
     @Prop({type: mongoose.Types.ObjectId , ref: "users"})
     lawyer: User
-    @Prop()
+   
   
     @Prop({type: mongoose.Types.ObjectId, ref: 'services'})
     service: Service

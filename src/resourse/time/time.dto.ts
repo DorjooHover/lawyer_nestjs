@@ -20,12 +20,7 @@ export class TimeTypeDto {
 }
 export class TimeDto {
   
-    @ApiProperty()
-    @IsNumber()
-    expiredTime: number
-    @ApiProperty()
-    @IsNumber()
-    price: number
+
     
     @ApiProperty()
     service: string

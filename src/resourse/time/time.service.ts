@@ -10,21 +10,20 @@ export class TimeService {
 
   async createTime(dto: TimeDto, user) {
     try {
-      let time = await this.model.findOne({lawyer: user, serviceType: dto.serviceType, service: dto.service})
+      let time = await this.model.findOne({lawyer: user,  service: dto.service})
+    
       if(time) {
         return await this.model.findOneAndUpdate({
-          lawyer:user, serviceType: dto.serviceType, service: dto.service
+          lawyer:user,  service: dto.service
         }, {
           timeDetail: dto.timeDetail, 
-          expiredTime: dto.expiredTime,
-          price: dto.price,
+          serviceType: dto.serviceType
         })
       } else {
         return await this.model.create({
         lawyer: user,
         timeDetail: dto.timeDetail,
-        expiredTime: dto.expiredTime,
-        price: dto.price,
+    
         service: dto.service,
         serviceType: dto.serviceType
       })
@@ -43,7 +42,7 @@ export class TimeService {
   }
   async getTimeService(id: string, type: string) {
     try {
-      return await this.model.find({service: id, serviceType: {$in: [type]}, 'timeDetail.status': TimeStatus.active, 'timeDetail.time': {$gte: Date.now() + 1000 * 60 * 30}})
+      return await this.model.find({service: id, 'serviceType.type': {$in: [type]}, 'timeDetail.status': TimeStatus.active, 'timeDetail.time': {$gte: Date.now() + 1000 * 60 * 30}})
     } catch (error) {
       throw new HttpException(error.message, 500)
     }
