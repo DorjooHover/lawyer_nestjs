@@ -48,9 +48,11 @@ export class TimeService {
     }
   }
   
-async getActive(time: number) {
+async getActive(time: number, id: string, type: string) {
     try {
       return await this.model.find({
+        service: id,
+        'serviceType.type': {$in: [type]},
         'timeDetail.status': TimeStatus.active,
         'timeDetail.time': {$gte: time + 1000 * 60 *30},
       })
