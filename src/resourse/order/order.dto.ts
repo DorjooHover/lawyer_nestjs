@@ -9,10 +9,6 @@ export class OrderDto {
 
   @ApiProperty()
   @IsString()
-  clientId: string;
-
-  @ApiProperty()
-  @IsString()
   lawyerId: string;
   @ApiProperty()
   @IsString()

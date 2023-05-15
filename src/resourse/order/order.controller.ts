@@ -36,7 +36,6 @@ export class OrderController {
   async createOrder(@Request() { user }, @Body() dto: OrderDto) {
     try {
       let lawyerId = new mongoose.mongo.ObjectId(dto.lawyerId)
-      let clientId = new mongoose.mongo.ObjectId(dto.clientId)
       let serviceId = new mongoose.mongo.ObjectId(dto.serviceId)
       let order = await this.model.create({
         client: user['_id'],
