@@ -38,13 +38,17 @@ export class OrderController {
       let lawyerId = new mongoose.mongo.ObjectId(dto.lawyerId)
       let serviceId = new mongoose.mongo.ObjectId(dto.serviceId)
       let order = await this.model.create({
-        client: user['_id'],
+        client:  user['_id'] ,
         date: dto.date,
         lawyer: lawyerId,
         location: dto.location,
+        expiredTime: dto.expiredTime,
         serviceStatus: dto.serviceStatus,
-        serviceId: serviceId,
-        subServiceId: dto.subServiceId,
+        serviceType: dto.serviceType,
+        userToken: dto.userToken,
+        price: dto.price,
+        lawyerToken: dto.lawyerToken,
+        channelName: dto.channelName
       });
       return order;
     } catch (error) {
