@@ -52,7 +52,7 @@ async getActive(time: number, id: string, type: string, isActive: boolean) {
     try {
  
       return await this.model.find({
-        service: id,
+        service: id == 'any' ? {$ne: null} : id,
         'serviceType.type': {$in: [type]},
         'timeDetail.status': TimeStatus.active,
         'timeDetail.time': isActive ? {$gte: Number.parseInt(time.toString()) + 1000 * 60 *30} :  Number.parseInt(time.toString()),
