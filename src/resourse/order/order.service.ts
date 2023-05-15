@@ -17,7 +17,7 @@ export class OrderService {
       let orders = await this.model
         .find({
           $and: [
-            { $or: [{ lawyerId: id }, { clientId: id }] },
+            { $or: [{ lawyer: id }, { client: id }] },
             {
               $or: [
                 { serviceStatus: ServiceStatus.active },
@@ -27,9 +27,9 @@ export class OrderService {
             { date: { $gte: date } },
           ],
         })
-        .populate('clientId', 'firstName lastName phone ', this.userModel)
+        .populate('client', 'firstName lastName phone ', this.userModel)
         .populate(
-          'lawyerId',
+          'lawyer',
           'firstName lastName phone profileImg',
           this.userModel,
         );
@@ -45,9 +45,9 @@ export class OrderService {
     try {
       let orders = await this.model
         .findById(id)
-        .populate('clientId', 'firstName lastName phone ', this.userModel)
+        .populate('client', 'firstName lastName phone ', this.userModel)
         .populate(
-          'lawyerId',
+          'lawyer',
           'firstName lastName phone profileImg',
           this.userModel,
         );
