@@ -48,13 +48,14 @@ export class TimeService {
     }
   }
   
-async getActive(time: number, id: string, type: string) {
+async getActive(time: number, id: string, type: string, isActive: boolean) {
     try {
+ 
       return await this.model.find({
         service: id,
         'serviceType.type': {$in: [type]},
         'timeDetail.status': TimeStatus.active,
-        'timeDetail.time': {$gte: time + 1000 * 60 *30},
+        'timeDetail.time': isActive ? {$gte: Number.parseInt(time.toString()) + 1000 * 60 *30} :  Number.parseInt(time.toString()),
       })
       // .sort({lawyer.ratingAvg: -1}).limit(1).select('lawyer')
     } catch(error) {

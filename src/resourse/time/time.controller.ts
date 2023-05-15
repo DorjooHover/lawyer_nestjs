@@ -29,16 +29,18 @@ export class TimeController {
   @Get('service/:id/:type')
   @ApiParam({name: 'id'})
   @ApiParam({name: 'type'})
+ 
   getTimeService(@Param('id') id: string, @Param('type') type: string) {
     return this.service.getTimeService(id, type)
   }
 
-  @Get('active/:time/:id/:type')
+  @Get('active/:time/:id/:type/:isActive')
   @ApiParam({name: 'time'})
   @ApiParam({name: 'id'})
   @ApiParam({name: 'type'})
-  getActive(@Param('time') time: number, @Param('id') id: string, @Param('type') type: string) {
-    return this.service.getActive(time, id, type)
+  @ApiParam({name: 'isActive'})
+  getActive(@Param('time') time: number, @Param('id') id: string, @Param('type') type: string, @Param('isActive') isActive: boolean) {
+    return this.service.getActive(time, id, type, isActive)
   }
   
 }
