@@ -22,7 +22,7 @@ import { UserStatus, UserType } from 'src/utils/enum';
 import { Roles } from '../auth/roles.decorator';
 import { TimeService } from '../time/time.service';
 import { RatingService } from './rating.service';
-import { LawyerDto } from './user.dto';
+import { LawyerDto, LocationDto } from './user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -56,6 +56,12 @@ export class UserController {
   @Get('me')
   getUser(@Request() { user }) {
     return user;
+  }
+
+  @Get('lawyer/location/:id')
+  @ApiParam({ name: 'id' })
+  async getLawyerLocation(@Param('id') id: string) {
+    return (await this.model.findById(id).select('location')).location;
   }
 
   @Get('user/:id')
@@ -139,8 +145,6 @@ export class UserController {
   @Roles(UserType.user)
   async updateLawyer(@Request() { user }, @Body() dto: LawyerDto) {
     try {
-      
-      
       let lawyer = await this.model.findByIdAndUpdate(user['_id'], {
         experience: dto.experience,
         education: dto.education,
@@ -159,7 +163,7 @@ export class UserController {
         profileImg: dto.profileImg,
         userServices: dto.userServices,
         email: dto.email,
-        phoneNumbers: dto.phoneNumbers
+        phoneNumbers: dto.phoneNumbers,
       });
 
       return true;
@@ -167,7 +171,18 @@ export class UserController {
       throw new HttpException(error.message, 500);
     }
   }
-  
+
+  @Roles(UserType.lawyer)
+  @Patch('location')
+  async updateLocation(@Request() { user }, @Body() dto: LocationDto) {
+    try {
+      user.location = dto;
+
+      user.save();
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
   @Patch('alert')
   async alertUser(@Request() { user }) {
     try {
@@ -183,6 +198,6 @@ export class UserController {
   }
   @Delete()
   async deleteUsers() {
-    return await this.model.deleteMany()
+    return await this.model.deleteMany();
   }
 }

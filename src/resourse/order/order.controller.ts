@@ -9,7 +9,7 @@ import {
   Put,
   Query,
   Request,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -35,10 +35,10 @@ export class OrderController {
   @Post('')
   async createOrder(@Request() { user }, @Body() dto: OrderDto) {
     try {
-      let lawyerId = new mongoose.mongo.ObjectId(dto.lawyerId)
-      let serviceId = new mongoose.mongo.ObjectId(dto.serviceId)
+      let lawyerId = new mongoose.mongo.ObjectId(dto.lawyerId);
+      let serviceId = new mongoose.mongo.ObjectId(dto.serviceId);
       let order = await this.model.create({
-        client:  user['_id'] ,
+        client: user['_id'],
         date: dto.date,
         lawyer: lawyerId,
         location: dto.location,
@@ -50,7 +50,7 @@ export class OrderController {
         userToken: dto.userToken,
         price: dto.price,
         lawyerToken: dto.lawyerToken,
-        channelName: dto.channelName
+        channelName: dto.channelName,
       });
       return order;
     } catch (error) {
@@ -59,12 +59,18 @@ export class OrderController {
   }
 
   @Post('emergency')
-  async createEmergencyOrder(@Request() {user},  @Body() dto: EmergencyOrderDto) {
+  async createEmergencyOrder(
+    @Request() { user },
+    @Body() dto: EmergencyOrderDto,
+  ) {
     try {
-      let lawyerId = dto.serviceType == ServiceType.onlineEmergency ? null : new mongoose.mongo.ObjectId(dto.lawyerId)
-      let clientId = new mongoose.mongo.ObjectId(dto.clientId)
+      let lawyerId =
+        dto.serviceType == ServiceType.onlineEmergency
+          ? null
+          : new mongoose.mongo.ObjectId(dto.lawyerId);
+
       let order = await this.model.create({
-        client:  user['_id'] ,
+        client: user['_id'],
         date: dto.date,
         lawyer: lawyerId,
         location: dto.location,
@@ -76,11 +82,11 @@ export class OrderController {
         userToken: dto.userToken,
         price: dto.price,
         lawyerToken: dto.lawyerToken,
-        channelName: dto.channelName
-      }) 
-      return order
+        channelName: dto.channelName,
+      });
+      return order;
     } catch (error) {
-      throw new HttpException(error.message, 500)
+      throw new HttpException(error.message, 500);
     }
   }
 
@@ -104,8 +110,6 @@ export class OrderController {
       throw new HttpException(error, 500);
     }
   }
-
-
 
   @Get('lawyer/token/:id/:channelName/:token')
   @ApiParam({ name: 'id' })

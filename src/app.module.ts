@@ -25,19 +25,8 @@ import { UserModule } from './resourse/user/user.module';
     AuthModule,
     ServiceModule,
     OrderModule,
-    // AwsModule,
+
     TimeModule,
-    // AwsSdkModule.forRootAsync({
-    //   defaultServiceOptions: {
-    //     useValue: {
-    //       credentials: {
-    //         accessKeyId: 'AKIA5QUH5LKTLFDISYOM',
-    //         secretAccessKey: '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',
-    //       },
-    //       region: appConfig().awsRegion,
-    //     },
-    //   },
-    // }),
   ],
   controllers: [],
   providers: [],
