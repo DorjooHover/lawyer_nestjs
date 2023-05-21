@@ -1,43 +1,41 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import mongoose, { Document } from "mongoose";
-import { ServiceType, TimeStatus } from "src/utils/enum";
-import { Service } from "./service.schema";
-import { User } from "./user.schema";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { Document } from 'mongoose';
+import { ServiceType, TimeStatus } from 'src/utils/enum';
+import { Service } from './service.schema';
+import { User } from './user.schema';
 
-
-export type TimeDocument = Document & Time
+export type TimeDocument = Document & Time;
 
 export class TimeDetail {
-  @Prop({type: String,  enum: TimeStatus, default: TimeStatus.active})
-  status: TimeStatus
+  @Prop({ type: String, enum: TimeStatus, default: TimeStatus.active })
+  status: TimeStatus;
   @Prop()
-  time: number
+  time: number;
 }
 
 export class TimeType {
-  @Prop({type: String, enum: ServiceType})
-  type: ServiceType
+  @Prop({ type: String, enum: ServiceType })
+  type: ServiceType;
   @Prop()
-  price: number
+  price: number;
   @Prop()
-  expiredTime: number
+  expiredTime: number;
 }
 
-@Schema({timestamps: true})
-export class Time  {
+@Schema({ timestamps: true })
+export class Time {
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'users' })
+  lawyer: User;
 
+  @Prop()
+  emergency: boolean;
 
-    @Prop({type: mongoose.Types.ObjectId , ref: "users"})
-    lawyer: User
-   
-  
-    @Prop({type: mongoose.Types.ObjectId, ref: 'services'})
-    service: Service
-    @Prop([TimeType])
-    serviceType: TimeType[]
-    @Prop([TimeDetail])
-    timeDetail: TimeDetail[]
-
+  @Prop({ type: mongoose.Types.ObjectId, ref: 'services' })
+  service: Service;
+  @Prop([TimeType])
+  serviceType: TimeType[];
+  @Prop([TimeDetail])
+  timeDetail: TimeDetail[];
 }
 
-export const TimeSchema = SchemaFactory.createForClass(Time)
+export const TimeSchema = SchemaFactory.createForClass(Time);

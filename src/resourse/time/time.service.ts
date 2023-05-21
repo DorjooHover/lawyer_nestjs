@@ -80,4 +80,8 @@ export class TimeService {
       throw new HttpException(error.message, 500);
     }
   }
+
+  async updateTimeStatus() {
+    
+  }
 }

@@ -11,13 +11,18 @@ export class OrderService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
-  async getUserOrders(id: string) {
+  async getUserOrders(user: any) {
     try {
       let date = Date.now() - 60 * 60 * 1000;
       let orders = await this.model
         .find({
           $and: [
-            { $or: [{ lawyer: id }, { client: id }] },
+            {
+              $or: [
+                { lawyer: user.userType == 'our' ? null : user['_id'] },
+                { client: user['_id'] },
+              ],
+            },
             {
               $or: [
                 { serviceStatus: ServiceStatus.active },

@@ -115,7 +115,7 @@ export class OrderController {
   @ApiParam({ name: 'id' })
   @ApiParam({ name: 'channelName' })
   @ApiQuery({ name: 'token' })
-  @Roles(UserType.lawyer)
+  @Roles(UserType.our, UserType.lawyer)
   async setOrderTokenLawyer(
     @Request() { user },
     @Param('id') id: string,
@@ -146,7 +146,7 @@ export class OrderController {
 
   @Get('user')
   getUserOrders(@Request() { user }) {
-    return this.service.getUserOrders(user['_id']);
+    return this.service.getUserOrders(user);
   }
 
   @Put('/:id/:status')
