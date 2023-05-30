@@ -18,7 +18,7 @@ import { Model } from 'mongoose';
 import { UserAccessGuard } from 'src/guard/auth.guard';
 import { RoleGuard } from 'src/guard/role.guard';
 import { Service, ServiceDocument, User, UserDocument } from 'src/schema';
-import { UserStatus, UserType } from 'src/utils/enum';
+import { LawyerStatus, UserStatus, UserType } from 'src/utils/enum';
 import { Roles } from '../auth/roles.decorator';
 import { TimeService } from '../time/time.service';
 import { RatingService } from './rating.service';

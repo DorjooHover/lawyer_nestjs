@@ -1,34 +1,40 @@
 export enum UserType {
-  // create order => in lawyer or without lawyer, view services, view lawyers, request lawyer, 
+  // create order => in lawyer or without lawyer, view services, view lawyers, request lawyer,
   user = 'user',
 
   our = 'our',
-  // create services, verify lawyer ,  change userType, userStatus without system 
+  // create services, verify lawyer ,  change userType, userStatus without system
   admin = 'admin',
-  // get order, view orders themselves, create availableDays for services, update them infos 
+  // get order, view orders themselves, create availableDays for services, update them infos
   lawyer = 'lawyer',
   // system
-  system = 'system'
+  system = 'system',
 }
 
 export enum UserStatus {
-  // lawyer requested 
-  pending = "pending",
+  // lawyer requested
+  pending = 'pending',
   // user created or lawyer verified
   active = 'active',
   // someone reason ban user
-  banned = 'banned'
+  banned = 'banned',
+}
+
+export enum LawyerStatus {
+  calling = 'calling',
+  active = 'active',
+  passive = 'passive'
 }
 
 export enum ServiceType {
   // voice call
-  onlineEmergency='onlineEmergency',
+  onlineEmergency = 'onlineEmergency',
   // video call
-  online='online',
-  // ordered meet 
+  online = 'online',
+  // ordered meet
   fulfilled = 'fulfilled',
-  // emergency meet 
-  fulfilledEmergency = 'fulfilledEmergency'
+  // emergency meet
+  fulfilledEmergency = 'fulfilledEmergency',
 }
 
 export enum ServiceStatus {
@@ -36,10 +42,11 @@ export enum ServiceStatus {
   pending = 'pending',
   // user created order
   active = 'active',
+  started = 'started',
   // order cancelled user or lawyer did't meet
   cancelled = 'cancelled',
   // success order
-  finished = 'finished'
+  finished = 'finished',
 }
 
 export enum TimeStatus {
@@ -50,5 +57,5 @@ export enum TimeStatus {
   // denied
   denied = 'denied',
   // ended
-  ended = 'ended'
+  ended = 'ended',
 }

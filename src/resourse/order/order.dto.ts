@@ -17,7 +17,7 @@ export class OrderDto {
   @ApiProperty()
   subServiceId?: string;
 
-  @ApiProperty({type: LocationDto})
+  @ApiProperty({ type: LocationDto })
   location?: LocationDto;
 
   @ApiProperty()
@@ -50,11 +50,13 @@ export class OrderDto {
 }
 export class EmergencyOrderDto {
   @ApiProperty()
+  userId: string;
+  @ApiProperty()
   date: number;
 
   @ApiProperty()
   @IsString()
-  lawyerId: string ;
+  lawyerId: string;
 
   @ApiProperty()
   location?: string;

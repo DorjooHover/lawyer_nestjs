@@ -8,6 +8,7 @@ import { OrderModule } from './resourse/order/order.module';
 import { ServiceModule } from './resourse/service/service.module';
 import { TimeModule } from './resourse/time/time.module';
 import { UserModule } from './resourse/user/user.module';
+import { AppGateway } from './app.gateway';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,6 +30,6 @@ import { UserModule } from './resourse/user/user.module';
     TimeModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [AppGateway],
 })
 export class AppModule {}

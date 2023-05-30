@@ -63,31 +63,8 @@ export class OrderController {
     @Request() { user },
     @Body() dto: EmergencyOrderDto,
   ) {
-    try {
-      let lawyerId =
-        dto.serviceType == ServiceType.onlineEmergency
-          ? null
-          : new mongoose.mongo.ObjectId(dto.lawyerId);
-
-      let order = await this.model.create({
-        client: user['_id'],
-        date: dto.date,
-        lawyer: lawyerId,
-        location: dto.location,
-        expiredTime: dto.expiredTime,
-        serviceStatus: dto.serviceStatus,
-        reason: dto.reason,
-        serviceId: 'any',
-        serviceType: dto.serviceType,
-        userToken: dto.userToken,
-        price: dto.price,
-        lawyerToken: dto.lawyerToken,
-        channelName: dto.channelName,
-      });
-      return order;
-    } catch (error) {
-      throw new HttpException(error.message, 500);
-    }
+    dto.userId = user['_id'];
+    return this.service.createEmergencyOrder(dto);
   }
 
   @Get('user/token/:id/:channelName/:token')
