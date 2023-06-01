@@ -1,8 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Order, OrderDocument, User, UserDocument } from 'src/schema';
-import { ServiceStatus } from 'src/utils/enum';
+import { LawyerStatus, ServiceStatus, ServiceType } from 'src/utils/enum';
+import { EmergencyOrderDto } from './order.dto';
 
 @Injectable()
 export class OrderService {
@@ -11,6 +12,48 @@ export class OrderService {
     @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
+  async updateLawyerStatus(
+    id: string,
+    status: LawyerStatus,
+    orderId: string,
+    orderStatus: ServiceStatus,
+  ) {
+    try {
+      await this.userModel.findByIdAndUpdate(id, {
+        $addToSet: { status: status },
+      });
+      return await this.updateOrderStatus(orderId, orderStatus);
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+  async createEmergencyOrder(dto: EmergencyOrderDto) {
+    try {
+      let lawyerId =
+        dto.serviceType == ServiceType.onlineEmergency
+          ? null
+          : new mongoose.mongo.ObjectId(dto.lawyerId);
+
+      let order = await this.model.create({
+        client: dto.userId,
+        date: dto.date,
+        lawyer: lawyerId,
+        location: dto.location,
+        expiredTime: dto.expiredTime,
+        serviceStatus: dto.serviceStatus,
+        reason: dto.reason,
+        serviceId: 'any',
+        serviceType: dto.serviceType,
+        userToken: dto.userToken,
+        price: dto.price,
+        lawyerToken: dto.lawyerToken,
+        channelName: dto.channelName,
+      });
+      return order;
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
   async getUserOrders(user: any) {
     try {
       let date = Date.now() - 60 * 60 * 1000;
@@ -79,7 +122,7 @@ export class OrderService {
         { $set: { serviceStatus: status } },
       );
 
-      if (!order) return false;
+      if (!order) return status;
 
       return true;
     } catch (error) {

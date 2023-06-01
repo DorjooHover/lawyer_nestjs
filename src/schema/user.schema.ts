@@ -1,32 +1,32 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
-import { UserStatus, UserType } from "src/utils/enum";
-import { Rating } from "./rating.schema";
-import { Service } from "./service.schema";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { LawyerStatus, UserStatus, UserType } from 'src/utils/enum';
+import { Rating } from './rating.schema';
+import { Service } from './service.schema';
 
 export type UserDocument = Document & User;
 
 export class Location {
-  lat: number
-  lng: number
+  lat: number;
+  lng: number;
 }
 
-export class ExperienceUser  {
+export class ExperienceUser {
   @Prop()
   link: string;
   @Prop()
-  date: string
-  @Prop() 
-  title: string
+  date: string;
+  @Prop()
+  title: string;
 }
 
 export class Account {
   @Prop()
-  accountNumber: number
+  accountNumber: number;
   @Prop()
-  username: string
+  username: string;
   @Prop()
-  bank: string
+  bank: string;
 }
 
 @Schema({ timestamps: true })
@@ -37,13 +37,12 @@ export class User {
   @Prop({ required: true })
   lastName: string;
 
-  
   @Prop({ required: true })
   phone: string;
-  
+
   @Prop({ required: true })
   password: string;
-  
+
   @Prop()
   registerNumber: string;
 
@@ -58,35 +57,35 @@ export class User {
   @Prop()
   experience?: number;
 
-    @Prop()
-    experiences?: ExperienceUser[]
+  @Prop()
+  experiences?: ExperienceUser[];
 
-    @Prop()
-    education?: ExperienceUser[]
+  @Prop()
+  education?: ExperienceUser[];
 
-    @Prop()
-    degree?: ExperienceUser[]
+  @Prop()
+  degree?: ExperienceUser[];
 
-    @Prop() 
-    licenseNumber?: string
+  @Prop()
+  licenseNumber?: string;
 
-    @Prop() 
-    certificate?: string
+  @Prop()
+  certificate?: string;
 
-    @Prop()
-    taxNumber?: string
+  @Prop()
+  taxNumber?: string;
 
-    @Prop({type: Account})
-    account?: Account
+  @Prop({ type: Account })
+  account?: Account;
 
-    @Prop({type: Location}) 
-    workLocation?: Location
+  @Prop({ type: Location })
+  workLocation?: Location;
 
-    @Prop({type: Location}) 
-    officeLocation?: Location
+  @Prop({ type: Location })
+  officeLocation?: Location;
 
-    @Prop({type: Location}) 
-    location?: Location
+  @Prop({ type: Location })
+  location?: Location;
 
   @Prop()
   bio?: String;
@@ -97,11 +96,23 @@ export class User {
   @Prop()
   rating?: Rating[];
 
-  @Prop({ type: String, enum: UserStatus, default: UserStatus.pending, required: true })
+  @Prop({
+    type: String,
+    enum: UserStatus,
+    default: UserStatus.pending,
+    required: true,
+  })
   userStatus: UserStatus;
 
-  @Prop({default: 3})
-  alert: number
+  @Prop({
+    type: String,
+    enum: LawyerStatus,
+    default: LawyerStatus.passive,
+  })
+  status: LawyerStatus;
+
+  @Prop({ default: 3 })
+  alert: number;
 
   @Prop()
   userServices?: Service[];
