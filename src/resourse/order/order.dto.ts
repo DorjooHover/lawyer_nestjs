@@ -56,6 +56,7 @@ export class EmergencyOrderDto {
 
   @ApiProperty()
   @IsString()
+
   lawyerId: string;
 
   @ApiProperty()
