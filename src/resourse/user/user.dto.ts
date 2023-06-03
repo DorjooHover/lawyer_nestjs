@@ -13,13 +13,13 @@ export class RatingDto {
 export class AccountDto {
   @ApiProperty()
   @IsNumber()
-  accountNumber: number
+  accountNumber: number;
   @ApiProperty()
   @IsString()
-  username: string
+  username: string;
   @ApiProperty()
   @IsString()
-  bank: string
+  bank: string;
 }
 
 export class ExperienceUser {
@@ -33,14 +33,13 @@ export class ExperienceUser {
 export class LocationDto {
   @ApiProperty()
   @IsNumber()
-  lat: number
+  lat: number;
   @ApiProperty()
   @IsNumber()
-  lng: number
+  lng: number;
 }
 
 export class LawyerDto {
-
   @ApiProperty()
   @IsString()
   profileImg: string;
@@ -52,45 +51,44 @@ export class LawyerDto {
   @ApiProperty()
   @IsNumber()
   experience: number;
-  
+
   @ApiProperty()
   @IsString()
-  licenseNumber: string
-  
+  licenseNumber: string;
+
   @ApiProperty()
   @IsString()
-  certificate: string
-  
+  certificate: string;
+
   @ApiProperty()
   @IsString()
-  taxNumber: string
+  taxNumber: string;
 
-  @ApiProperty({type: AccountDto})
-  account: AccountDto
+  @ApiProperty({ type: AccountDto })
+  account: AccountDto;
 
-  @ApiProperty({type: LocationDto}) 
-  workLocation: LocationDto
+  @ApiProperty({ type: LocationDto })
+  workLocation: LocationDto;
 
-  @ApiProperty({type: LocationDto}) 
-  officeLocation: LocationDto
+  @ApiProperty({ type: LocationDto })
+  officeLocation: LocationDto;
 
-  @ApiProperty({type: LocationDto}) 
-  location: LocationDto
-  
-  @ApiProperty({type: ExperienceUser, isArray: true})
-  experiences: ExperienceUser[]
-  
-  @ApiProperty({ type: ExperienceUser, isArray: true })
-  education?: ExperienceUser[]
+  @ApiProperty({ type: LocationDto })
+  location: LocationDto;
 
   @ApiProperty({ type: ExperienceUser, isArray: true })
-  degree?: ExperienceUser[]
+  experiences: ExperienceUser[];
 
-  @ApiProperty({ isArray: true})
-  userServices: string[]
-  @ApiProperty({isArray: true})
-  phoneNumbers: string[]
+  @ApiProperty({ type: ExperienceUser, isArray: true })
+  education?: ExperienceUser[];
+
   @ApiProperty()
-  
-  email: string
+  degree?: string;
+
+  @ApiProperty({ isArray: true })
+  userServices: string[];
+  @ApiProperty({ isArray: true })
+  phoneNumbers: string[];
+  @ApiProperty()
+  email: string;
 }

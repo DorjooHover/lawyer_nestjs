@@ -64,7 +64,7 @@ export class User {
   education?: ExperienceUser[];
 
   @Prop()
-  degree?: ExperienceUser[];
+  degree?: string;
 
   @Prop()
   licenseNumber?: string;
