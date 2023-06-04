@@ -63,6 +63,13 @@ export class LawyerDto {
   @ApiProperty()
   @IsString()
   taxNumber: string;
+  @ApiProperty()
+  @IsString()
+  officeLocationString: string;
+
+  @ApiProperty()
+  @IsString()
+  workLocationString: string;
 
   @ApiProperty({ type: AccountDto })
   account: AccountDto;

@@ -49,7 +49,8 @@ export class OrderService {
         lawyerToken: dto.lawyerToken,
         channelName: dto.channelName,
       });
-      return order;
+      let user = await this.userModel.findById(order.client);
+      return { user, order };
     } catch (error) {
       throw new HttpException(error.message, 500);
     }

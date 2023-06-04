@@ -38,29 +38,34 @@ export class AppGateway
     @ConnectedSocket() client: Socket,
     @MessageBody() payload: EmergencyOrderDto,
   ): Promise<void> {
-    let order = await this.orderService.createEmergencyOrder(payload);
-    console.log(order.serviceStatus);
-    this.server.emit('response_emergency_order', order.serviceStatus);
+    let res = await this.orderService.createEmergencyOrder(payload);
+
+    this.server.emit('response_emergency_order', {
+      client: res.user,
+      _id: res.order.id,
+
+      channelName: res.order.channelName,
+    });
   }
-  @SubscribeMessage('change_order_status')
-  async updateStatus(
-    @ConnectedSocket() client: Socket,
-    @MessageBody()
-    payload: {
-      id: string;
-      status: LawyerStatus;
-      orderId: string;
-      orderStatus: ServiceStatus;
-    },
-  ): Promise<void> {
-    let status = await this.orderService.updateLawyerStatus(
-      payload.id,
-      payload.status,
-      payload.orderId,
-      payload.orderStatus,
-    );
-    this.server.emit('response_emergency_order', status);
-  }
+  // @SubscribeMessage('change_order_status')
+  // async updateStatus(
+  //   @ConnectedSocket() client: Socket,
+  //   @MessageBody()
+  //   payload: {
+  //     id: string;
+  //     status: LawyerStatus;
+  //     orderId: string;
+  //     orderStatus: ServiceStatus;
+  //   },
+  // ): Promise<void> {
+  //   let status = await this.orderService.updateLawyerStatus(
+  //     payload.id,
+  //     payload.status,
+  //     payload.orderId,
+  //     payload.orderStatus,
+  //   );
+  //   this.server.emit('response_emergency_order', status);
+  // }
 
   @SubscribeMessage('join_room')
   async joinRoomOurLawyer(@ConnectedSocket() client: Socket): Promise<void> {

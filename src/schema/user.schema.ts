@@ -46,6 +46,12 @@ export class User {
   @Prop()
   registerNumber: string;
 
+  @Prop()
+  officeLocationString?: string;
+
+  @Prop()
+  workLocationString?: string;
+
   @Prop({
     type: String,
     enum: UserType,

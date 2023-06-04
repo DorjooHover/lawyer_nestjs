@@ -153,6 +153,8 @@ export class UserController {
         licenseNumber: dto.licenseNumber,
         location: dto.location,
         certificate: dto.certificate,
+        officeLocationString: dto.officeLocationString,
+        workLocationString: dto.workLocationString,
         taxNumber: dto.taxNumber,
         workLocation: dto.workLocation,
         officeLocation: dto.officeLocation,
