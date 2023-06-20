@@ -17,7 +17,7 @@ import mongoose, { Model } from 'mongoose';
 import { UserAccessGuard } from 'src/guard/auth.guard';
 import { RoleGuard } from 'src/guard/role.guard';
 import { Order, OrderDocument } from 'src/schema';
-import { ServiceStatus, ServiceType, UserType } from 'src/utils/enum';
+import { ServiceStatus, UserType } from 'src/utils/enum';
 import { Roles } from '../auth/roles.decorator';
 import { EmergencyOrderDto, OrderDto } from './order.dto';
 import { OrderService } from './order.service';
@@ -90,13 +90,13 @@ export class OrderController {
 
   @Get('lawyer/token/:id/:channelName/:token')
   @ApiParam({ name: 'id' })
-  @ApiParam({ name: 'channelName' })
+  @ApiQuery({ name: 'channelName' })
   @ApiQuery({ name: 'token' })
   @Roles(UserType.our, UserType.lawyer)
   async setOrderTokenLawyer(
     @Request() { user },
     @Param('id') id: string,
-    @Param('channelName') channelName: string,
+    @Query('channelName') channelName: string,
     @Query('token') token: string,
   ) {
     try {
