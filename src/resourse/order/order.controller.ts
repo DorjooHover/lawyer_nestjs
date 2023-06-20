@@ -69,12 +69,12 @@ export class OrderController {
 
   @Get('user/token/:id/:channelName/:token')
   @ApiParam({ name: 'id' })
-  @ApiParam({ name: 'channelName' })
+  @ApiQuery({ name: 'channelName' })
   @ApiQuery({ name: 'token' })
   async setOrderTokenUser(
     @Request() { user },
     @Param('id') id: string,
-    @Param('channelName') channelName: string,
+    @Query('channelName') channelName: string,
     @Query('token') token: string,
   ) {
     try {
