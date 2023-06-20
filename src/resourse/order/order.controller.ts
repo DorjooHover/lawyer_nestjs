@@ -67,20 +67,22 @@ export class OrderController {
     return this.service.createEmergencyOrder(dto);
   }
 
-  @Get('user/token/:id/:channelName/:token')
+  @Post('token/:id/:channelName/:isLawyer')
   @ApiParam({ name: 'id' })
-  @ApiQuery({ name: 'channelName' })
-  @ApiQuery({ name: 'token' })
+  @ApiParam({ name: 'channelName' })
+  @ApiParam({ name: 'isLawyer' })
+
   async setOrderTokenUser(
     @Request() { user },
     @Param('id') id: string,
-    @Query('channelName') channelName: string,
-    @Query('token') token: string,
+    @Param('channelName') channelName: string,
+    @Param('isLawyer') isLawyer: string,
+    @Body() token: {token: string} 
   ) {
     try {
       let order = await this.model.findById(id);
       order.channelName = channelName;
-      order.userToken = token;
+      isLawyer == 'true' ? order.lawyerToken = token.token : order.userToken = token.token;
       await order.save();
       return await this.service.getOrderById(order['_id']);
     } catch (error) {
@@ -88,27 +90,6 @@ export class OrderController {
     }
   }
 
-  @Get('lawyer/token/:id/:channelName/:token')
-  @ApiParam({ name: 'id' })
-  @ApiQuery({ name: 'channelName' })
-  @ApiQuery({ name: 'token' })
-  @Roles(UserType.our, UserType.lawyer)
-  async setOrderTokenLawyer(
-    @Request() { user },
-    @Param('id') id: string,
-    @Query('channelName') channelName: string,
-    @Query('token') token: string,
-  ) {
-    try {
-      let order = await this.model.findById(id);
-      order.channelName = channelName;
-      order.lawyerToken = token;
-      await order.save();
-      return await this.service.getOrderById(order['_id']);
-    } catch (error) {
-      throw new HttpException(error, 500);
-    }
-  }
 
   @Get('user/:id')
   @ApiParam({ name: 'id' })
