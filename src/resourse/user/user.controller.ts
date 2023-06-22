@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Post,
   Put,
   Query,
   Request,
@@ -75,15 +76,12 @@ export class UserController {
     }
   }
 
-  @Get('/:id')
-  @ApiQuery({ name: 'comment' })
-  @ApiQuery({ name: 'rating' })
+  @Post('/:id')
   @Roles(UserType.user)
   async giveRating(
     @Request() { user },
     @Param('id') id: string,
-    @Query('comment') comment: string,
-    @Query('rating') rating: number,
+    @Body() body: { rating: number; message: string },
   ) {
     if (!user) throw new HttpException('error', HttpStatus.UNAUTHORIZED);
     try {
@@ -92,19 +90,19 @@ export class UserController {
 
       let createdRating = await this.ratingService.createRating(
         user['_id'],
-        comment,
-        rating,
+        body.message ?? '',
+        body.rating,
       );
       if (!createdRating) return false;
       let avg =
         lawyer.rating.length > 0
           ? Math.round(
               ((Number(lawyer.ratingAvg) * Number(lawyer.rating.length) +
-                Number(rating)) /
+                Number(body.rating)) /
                 (Number(lawyer.rating.length) + 1)) *
                 10,
             ) / 10
-          : rating;
+          : body.rating;
       lawyer.rating.push(createdRating);
       lawyer.ratingAvg = avg;
       lawyer.save();
