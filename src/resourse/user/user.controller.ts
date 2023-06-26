@@ -115,8 +115,9 @@ export class UserController {
   @Get('suggest/lawyer')
   async getSuggestedLawyers(@Request() { user }) {
     let lawyers = await this.model
-      .find({ userType: UserType.lawyer }, null, { sort: { ratingAvg: -1 } })
+      .find({ $or: [{ userType: UserType.lawyer}, { userType: UserType.our}] }, null, { sort: { ratingAvg: -1 } })
       .limit(20);
+
     return lawyers;
   }
 
@@ -130,7 +131,7 @@ export class UserController {
   ) {
     let lawyers = await this.model.find(
       {
-        userType: UserType.lawyer,
+        $or: [{ userType: UserType.lawyer}, { userType: UserType.our}],
         'userServices.serviceId': { $in: [id, cateId] },
       },
       null,

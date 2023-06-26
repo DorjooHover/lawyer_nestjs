@@ -14,7 +14,7 @@ export class TimeController {
   constructor(private readonly service: TimeService) {}
 
   @Post()
-  @Roles(UserType.lawyer)
+  @Roles(UserType.lawyer, UserType.our)
   createTime(@Request() {user} , @Body()  dto: TimeDto) {
   //  return dto.times.map(time => this.service.createTime(time, user['_id']))
     return this.service.createTime(dto, user['_id'])
