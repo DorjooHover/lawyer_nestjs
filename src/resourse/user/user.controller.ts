@@ -19,7 +19,7 @@ import { Model } from 'mongoose';
 import { UserAccessGuard } from 'src/guard/auth.guard';
 import { RoleGuard } from 'src/guard/role.guard';
 import { Service, ServiceDocument, User, UserDocument } from 'src/schema';
-import { LawyerStatus, UserStatus, UserType } from 'src/utils/enum';
+import { UserStatus, UserType } from 'src/utils/enum';
 import { Roles } from '../auth/roles.decorator';
 import { TimeService } from '../time/time.service';
 import { RatingService } from './rating.service';
@@ -55,8 +55,8 @@ export class UserController {
   }
 
   @Get('me')
-  getUser(@Request() { user }) {
-    return user;
+  async getUser(@Request() { user }) {
+    return await this.model.findById(user['_id']).populate('rating.clientId', ' firstName lastName phone', this.model);
   }
 
   @Get('lawyer/location/:id')
