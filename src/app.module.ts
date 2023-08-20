@@ -5,10 +5,10 @@ import appConfig from './config/app.config';
 import { AuthModule } from './resourse/auth/auth.module';
 import { OrderModule } from './resourse/order/order.module';
 
+import { AppGateway } from './app.gateway';
 import { ServiceModule } from './resourse/service/service.module';
 import { TimeModule } from './resourse/time/time.module';
 import { UserModule } from './resourse/user/user.module';
-import { AppGateway } from './app.gateway';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,8 +17,8 @@ import { AppGateway } from './app.gateway';
     }),
 
     MongooseModule.forRoot(appConfig().dbUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      // // useUnifiedTopology: true,
       dbName: appConfig().dbName,
     }),
 
