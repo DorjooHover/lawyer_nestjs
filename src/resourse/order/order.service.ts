@@ -63,7 +63,7 @@ export class OrderService {
           $and: [
             {
               $or: [
-                { lawyer: user.userType == 'our' ? null : user['_id'] },
+                { lawyer:  user['_id'] },
                 { client: user['_id'] },
               ],
             },
