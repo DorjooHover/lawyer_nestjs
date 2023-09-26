@@ -24,7 +24,7 @@ export class OrderService {
       });
       return await this.updateOrderStatus(orderId, orderStatus);
     } catch (error) {
-      throw new HttpException(error.message, 500);
+     throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
   async createEmergencyOrder(dto: EmergencyOrderDto) {
@@ -52,7 +52,7 @@ export class OrderService {
       let user = await this.userModel.findById(order.client);
       return { user, order };
     } catch (error) {
-      throw new HttpException(error.message, 500);
+     throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
   async getUserOrders(user: any) {

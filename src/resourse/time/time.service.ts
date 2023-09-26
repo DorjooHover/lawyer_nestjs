@@ -36,7 +36,7 @@ export class TimeService {
         });
       }
     } catch (error) {
-      throw new HttpException(error.message, 500);
+      throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
 
@@ -49,7 +49,7 @@ export class TimeService {
         'timeDetail.time': { $lte: Date.now() + 1000 * 60 * 30 },
       });
   } catch (error) {
-    throw new HttpException(error.message, 500);
+    throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
   async getTimeService(id: string, type: string) {
@@ -61,7 +61,7 @@ export class TimeService {
         'timeDetail.time': { $gte: Date.now() + 1000 * 60 * 30 },
       });
     } catch (error) {
-      throw new HttpException(error.message, 500);
+      throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
 
@@ -77,7 +77,7 @@ export class TimeService {
       });
       // .sort({lawyer.ratingAvg: -1}).limit(1).select('lawyer')
     } catch (error) {
-      throw new HttpException(error.message, 500);
+      throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
 

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, Matches } from "class-validator";
 
 import { UserType } from "src/utils/enum";
 
@@ -18,6 +18,9 @@ export class RegisterDto {
     @ApiProperty()
     @IsString()
     @IsNotEmpty()
+    @Matches(/^[89]{1}?[0-9]{7}$/,{
+      message: "Утасны дугаар алдаатай байна."
+    } )
     phone: string
 
     @ApiProperty({minLength: 6})
@@ -37,6 +40,9 @@ export class LoginDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @Matches(/^[89]{1}?[0-9]{7}$/,{
+    message: "Утасны дугаар алдаатай байна."
+  } )
   phone: string
 
   @ApiProperty({minLength: 6})

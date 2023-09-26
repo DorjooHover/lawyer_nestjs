@@ -22,7 +22,7 @@ export class AuthController {
   async register(@Body() dto: RegisterDto) {
     try {
       let user = await this.service.validateUser(dto.phone);
-      if (user) throw new HttpException('registered user', HttpStatus.FOUND);
+      if (user) throw new HttpException('Бүртгэлтэй дугаар байна', HttpStatus.FOUND);
       const hashed = await bcrypt.hash(dto.password, 10);
   
         user = await this.model.create({
@@ -38,21 +38,21 @@ export class AuthController {
       const token = await this.service.signPayload(user.phone);
       return {  token };
     } catch (e) {
-      throw new HttpException(e.message, HttpStatus.FORBIDDEN);
+      throw new HttpException("Алдаа гарлаа", HttpStatus.FORBIDDEN);
     }
   }
   @Post('login')
   async login(@Body() dto: LoginDto) {
     let user = await this.service.validateUser(dto.phone);
-    if (!user) throw new HttpException('wrong phone', HttpStatus.FORBIDDEN);
-
+    if (!user) throw new HttpException('Бүртгэлгүй дугаар байна.', HttpStatus.FORBIDDEN);
+    if(user.userStatus == UserStatus.banned) throw new HttpException('Нэвтрэх боломжгүй дугаар байна.', HttpStatus.FORBIDDEN);
     const checkPassword =  this.checkPassword(dto.password, user.password);
 
     if (checkPassword) {
       const token = await this.service.signPayload(user.phone);
       return {  token };
     } else {
-      throw new HttpException('wrong password', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Нууц үг буруу байна.', HttpStatus.UNAUTHORIZED);
     }
   }
 

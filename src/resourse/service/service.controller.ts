@@ -29,7 +29,7 @@ export class ServiceController {
       })
       return service
     } catch (error) {
-      throw new HttpException(error, 500)
+     throw new HttpException('Алдаа гарлаа.', 500);
     }
   } 
   @Get()
@@ -38,7 +38,7 @@ export class ServiceController {
       let services = await this.model.find({parentId: {$eq: "false"}})
       return services
     } catch (error) {
-      throw new HttpException(error, 500)
+     throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
 
@@ -49,7 +49,7 @@ export class ServiceController {
       let service = await this.model.find({parentId: id} ).populate('parentId', 'title _id', this.model )
       return service
     } catch (error) {
-      throw new HttpException(error, 500)
+     throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
 
@@ -71,7 +71,7 @@ export class ServiceController {
       if(!service) return false
       return true
     } catch (error) {
-      throw new HttpException(error, 500)
+     throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
 
@@ -83,7 +83,7 @@ export class ServiceController {
       if(!service) return false
       return true
     } catch (error) {
-      throw new HttpException(error, 500)
+     throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
 }

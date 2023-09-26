@@ -169,7 +169,7 @@ export class UserController {
 
       return true;
     } catch (error) {
-      throw new HttpException(error.message, 500);
+      throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
 
@@ -181,7 +181,7 @@ export class UserController {
 
       user.save();
     } catch (error) {
-      throw new HttpException(error.message, 500);
+      throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
   @Patch('alert')
@@ -194,7 +194,7 @@ export class UserController {
       }
       user.save();
     } catch (error) {
-      throw new HttpException(error.message, 500);
+      throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
   @Delete()
