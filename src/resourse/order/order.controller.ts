@@ -54,6 +54,7 @@ export class OrderController {
       });
       return order;
     } catch (error) {
+      console.log(error)
       throw new HttpException('Алдаа гарлаа.', 500);
     }
   }
